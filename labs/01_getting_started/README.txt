@@ -1,7 +1,7 @@
 LAB 1: GETTING STARTED
 
 
-NAME:  < insert name >
+NAME:  Nicolas Morawski
 
 
 
@@ -13,7 +13,9 @@ the resources (books, online reference material, etc.) you consulted
 in completing this assignment. 
 
 
-< insert collaborators / resources >
+No collaborators used.
+Lab Partners:
+- 
 
 
 
