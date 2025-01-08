@@ -4,13 +4,13 @@
 
 int main(int argc, char* argv[]){
     std::ifstream input(argv[1]);
-    std::ifstream output(argv[2]);
-    std::string row;
+    std::ofstream output(argv[2]);
+    std::string user;
 
     if (input.is_open()){//If the file is open
         while (input.good()){//While there is text to retrieve. store each line in the vector
-            getline(input,row);
-            std::cout << row <<"\n"<< std::endl;
+            getline(input,user);
+            std::cout << "LINE " << user <<"\n"<< std::endl;
         }
         input.close();
     } else {
