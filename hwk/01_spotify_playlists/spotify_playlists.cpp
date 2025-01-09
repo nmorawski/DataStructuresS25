@@ -1,20 +1,39 @@
-#include <iostream> //Includes functions of program
+#include <iostream> 
 #include <fstream> //Include file streams
 #include <string> //Includes strings
 #include <vector> //Includes vectors
-#include <algorithm> //Includes lamda functions, sort, etc.
-#include <cctype>
+#include <algorithm> //Used for std::stoi
+#include <sstream> //includes stringstream
+#include <cctype> //Used for isdigit()
 
 
-void parse_file(std::ifstream& input, std::string& song, std::string& band, 
-    std::vector<std::string>& song_list, std::vector<std::string>& band_list){
+std::vector<std::string> parse_line(const std::string &line){
+    std::vector<std::string> results;
+    std::stringstream ss(line);
+    std::string name;
+
+    while (getline(ss, name, '"')) {
+        if (name.size() > 0)
+            results.push_back(name);
+    }
+
+    return results;
+}
+
+int parse_file(std::ifstream& input, std::vector<std::string>& song_list, std::vector<std::string>& band_list){
     if (input.is_open()){//If the file is open
-        while (input >> song){//While there is text to retrieve. store each line in the vector
-            input >> band;
-            song_list.push_back(song);
-            band_list.push_back(band);
+        std::string row;
+        std::vector<std::string> line;
+        while (input.good()){//While there is text to retrieve. store each line in the vector
+            getline(input, row);
+            if (row.size() > 0) {
+                line = parse_line(row);
+                song_list.push_back(line[0]);
+                band_list.push_back(line[1].substr(1, line[1].size()));
+            }
         }
         input.close();
+        return 0;
     } else {
         std::cerr << "Unable to open file" <<std::endl;
         return 1;
@@ -34,7 +53,7 @@ int find_song(const std::string title, std::vector<std::string> &songs){
 }
 
 bool is_number(const std::string num){
-    return std::all_of(num.begin(), num.end(), ::isdigit)
+    return std::all_of(num.begin(), num.end(), ::isdigit);
 }
 
 int main(int argc, char* argv[]){
@@ -45,23 +64,13 @@ int main(int argc, char* argv[]){
     std::vector<std::string> playlist_songs; //To store
     std::vector<std::string> playlist_artists; //To store 
 
-    std::ifstream lib_input(argv[1]);
-    std::ifstream playlist_input(argv[2]);
+    std::ifstream playlist_input(argv[1]);
+    std::ifstream lib_input(argv[2]);
     std::ofstream output(argv[3]);
 
-    parse_file(lib_input, song_name, artist, library_songs, library_artists);
+    parse_file(lib_input, library_songs, library_artists);
 
-    if (playlist_input.is_open()){//If the file is open
-        while (playlist_input >> song_name){//While there is text to retrieve. store each line in the vector
-            playlist_input >> artist;
-            playlist_songs.push_back(song_name);
-            playlist_artists.push_back(artist);
-        }
-        playlist_input.close();
-    } else {
-        std::cerr << "Unable to open playlist file" <<std::endl;
-        return 1;
-    }
+    parse_file(playlist_input, playlist_songs, playlist_artists);
 
     if (argv[4] == std::string("add")){
         if (argc != 6){
@@ -104,13 +113,19 @@ int main(int argc, char* argv[]){
             song_name = argv[5];
             int song_loc = find_song(song_name,playlist_songs);
             if (song_loc != -1){
-                if (is_number(argv[6]) && stoi(argv[6]) <= playlist_songs.size()){
-                    int playlist_loc = stoi(argv[6]);
+                if (is_number(argv[6]) && std::stoi(argv[6]) <= playlist_songs.size()){
+                    int playlist_loc = std::stoi(argv[6]);
+                    std::string selected_artist = playlist_artists[song_loc];
+                    
+                    playlist_songs.erase(playlist_songs.begin() + song_loc);
+                    playlist_songs.insert(playlist_songs.begin() + (playlist_loc - 1), song_name);
+
+                    playlist_artists.erase(playlist_artists.begin() + song_loc);
+                    playlist_artists.insert(playlist_artists.begin() + (playlist_loc - 1), selected_artist);
                 } else {
                    std::cerr << "Move request could not be made." << std::endl;
                     return 1; 
                 }
-                
             } else {
                 std::cerr << "Requested song could not be found." << std::endl;
                 return 1;
@@ -120,4 +135,15 @@ int main(int argc, char* argv[]){
         std::cerr << "Invalid command given." << std::endl;
         return 1;
     }
+
+    if (output.is_open()){//If the file is open
+        for (unsigned int i = 0; i < playlist_songs.size(); i++)
+            output << '"' << playlist_songs[i] << "\" " << playlist_artists[i] << "\n";
+        output.close();
+    } else {
+        std::cerr << "Unable to open file" <<std::endl;
+        return 1;
+    }
+
+    return 0;
 }
