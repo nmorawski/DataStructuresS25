@@ -6,10 +6,10 @@
 #include <sstream> //Includes stringstream
 #include <cctype> //Used for isdigit()
 
-//The function parse_line takes in a string, which is a line in either
-//the library or the playlist input file. It then uses the double 
-//quotation character, '"', as a delimiter. The function then returns a
-//vector of size 2, which includes the song title and the artist(s) credited.
+/*The function parse_line takes in a string, which is a line in either
+  the library or the playlist input file. It then uses the double 
+  quotation character, '"', as a delimiter. The function then returns a
+  vector of size 2, which includes the song title and the artist(s) credited.*/
 std::vector<std::string> parse_line(const std::string &line){
     std::vector<std::string> results;
     std::stringstream ss(line);
@@ -23,12 +23,12 @@ std::vector<std::string> parse_line(const std::string &line){
     return results;
 }
 
-//The function parse_file takes in an input file, along with two vectors of strings
-//that represent all of the song titles from the input file, along with all of the 
-//credited artists. The function goes line by line in the input file, and while there
-//is text to retrieve, parse_line is called, and the values produced are saved in their
-//respective vector of strings. This function is used interchangeablywith the playlist
-//and library input files.
+/*The function parse_file takes in an input file, along with two vectors of strings
+  that represent all of the song titles from the input file, along with all of the 
+  credited artists. The function goes line by line in the input file, and while there
+  is text to retrieve, parse_line is called, and the values produced are saved in their
+  respective vector of strings. This function is used interchangeablywith the playlist
+  and library input files.*/
 int parse_file(std::ifstream& input, std::vector<std::string>& song_list, 
         std::vector<std::string>& band_list){
     if (input.is_open()){//If the file is open
@@ -50,11 +50,11 @@ int parse_file(std::ifstream& input, std::vector<std::string>& song_list,
     }
 }
 
-//The function find_song takes in a string, the desired song title, and the vector
-//of strings that represents the desired vector of song titles (either the library
-//vector, or the playlist vector). The function loops through the vector, searching
-//for the desired song title. If found, the function will return the song title's index.
-//If not found, the function will return -1 to represent the failure to do so.
+/*The function find_song takes in a string, the desired song title, and the vector
+  of strings that represents the desired vector of song titles (either the library
+  vector, or the playlist vector). The function loops through the vector, searching
+  for the desired song title. If found, the function will return the song title's index.
+  If not found, the function will return -1 to represent the failure to do so.*/
 int find_song(const std::string title, std::vector<std::string> &songs){
     unsigned int song_index = 0;
     std::string lib_title = "";
@@ -67,10 +67,10 @@ int find_song(const std::string title, std::vector<std::string> &songs){
     return -1;
 }
 
-//The function is_number is used solely for when the 'move' action is called. The 
-//function takes in a string, which is supposed to be the number at the end of the 
-//command line, and verifies the string is a legitimate number. This is done by
-//verifying each character in the string is numeric.
+/*The function is_number is used solely for when the 'move' action is called. The 
+  function takes in a string, which is supposed to be the number at the end of the 
+  command line, and verifies the string is a legitimate number. This is done by
+  verifying each character in the string is numeric.*/
 bool is_number(const std::string num){
     return std::all_of(num.begin(), num.end(), ::isdigit);
 }
@@ -132,10 +132,10 @@ int main(int argc, char* argv[]){
             std::cerr << "Incorrect amount of command line arguments." << std::endl;
             return 1;
         } else {
-           //Search for song title in playlist. If found, remove the respective title and
-           //artists from their current location in the playlist (the two playlist vectors)
-           //and re-insert back in the playlist in the desired position (desired placement
-           //minus 1 to determine vector index).
+           /*Search for song title in playlist. If found, remove the respective title and
+             artists from their current location in the playlist (the two playlist vectors)
+             and re-insert back in the playlist in the desired position (desired placement
+             minus 1 to determine vector index).*/
             song_name = argv[5];
             int song_loc = find_song(song_name,playlist_songs);
             if (song_loc != -1){//If song found
@@ -162,9 +162,9 @@ int main(int argc, char* argv[]){
         std::cerr << "Invalid command given." << std::endl;
         return 1;
     }
-    //Open the desired output file and loop through the playlist song vector. Both the
-    //song and artist vectors are the same size, and each index matches, so we only need
-    //one for loop. Print one song-artist combination per line until completion.
+    /*Open the desired output file and loop through the playlist song vector. Both the
+      song and artist vectors are the same size, and each index matches, so we only need
+      one for loop. Print one song-artist combination per line until completion.*/
     if (output.is_open()){//If the file is open
         for (unsigned int i = 0; i < playlist_songs.size(); i++)
             output << '"' << playlist_songs[i] << "\" " << playlist_artists[i] << "\n";
