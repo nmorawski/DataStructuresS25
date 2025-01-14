@@ -32,17 +32,17 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
     return distanceMiles;
 }
 
-//nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber request
-//nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber cancel
-//nyride.exe drivers.txt out_drivers.txt remove 3.5 (removing drivers under specified rating)
+//nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber request (8)
+//nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber cancel (8)
+//nyride.exe drivers.txt out_drivers.txt remove 3.5 (removing drivers under specified rating) (5)
 //nyride.exe drivers.txt riders.txt search all
 //nyride.exe drivers.txt riders.txt search rider_id
-//nyride.exe drivers.txt riders.txt search driver_id (all 3 ride monitoring)
+//nyride.exe drivers.txt riders.txt search driver_id (all 3 ride monitoring) (5)
 
 int main(int argc, char* argv[]){
     std::vector<Rider> riders;
     std::vector<Driver> drivers;
 
-    
+
     return 0;
 }
