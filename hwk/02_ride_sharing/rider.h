@@ -6,6 +6,7 @@
 #include <string> //Includes strings
 #include <vector> //Includes vectors
 #include "driver.h"
+#include "location.h"
 
 //Driver view
 //Sandra Huang Female 25 853-977-5304 3.1 40.4269 -73.0753 Standard On_the_way_to_pickup Michael Richard 445-915-1645
@@ -35,12 +36,14 @@ Rider's first name
 */
 class Rider {
 public:
-Rider(std::string const name, std::string &phone_number, double &rating, 
-    std::string pickup_name, std::vector<double> pickup_loc, std::string dropoff_name, 
-    std::vector<double> dropoff_loc,std::string &vehicle, std::string state, Driver &driver);
-Rider(std::string const name, std::string  const &phone_number);
+Rider();
+Rider(std::string name, std::string phone_number, double rating, 
+    Location pickup_loc, Location dropoff_loc, std::string vehicle, 
+    std::string state, Driver driver);
+Rider(std::string name, std::string phone_number);
+Rider(std::string name, std::string phone_number, Driver driver);
 // ACCESSORS
-Driver& getDriver() const { return driver_; }
+Driver getDriver() const { return driver_; }
 std::string getName() const { return name_; }
 std::string getPhone() const { return phone_; }
 double getRating() const { return rating_; }
