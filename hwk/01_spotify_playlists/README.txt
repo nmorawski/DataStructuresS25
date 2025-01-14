@@ -12,14 +12,14 @@ material, etc.) you consulted in completing this assignment.
 
 cppreference.com
 cplusplus.com
-(Used bothr resources for syntax references)
+(Used both resources for syntax references)
 
 Remember: Your implementation for this assignment must be done on your
 own, as described in "Academic Integrity for Homework" handout.
 
 
 
-ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  4-6 hours
+ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  6-8 hours
 
 
 
@@ -43,5 +43,6 @@ did the development and testing process go for you?
 I already have a decent background in C++, so I didn't have too many issues. I only had 
 some minor issues with taking in strings/text from the input files and correctly cleaning/parsing 
 them (had one occurrence of a seg. fault). Also, the song "I" by Kendrick Lamar caused an issue,
-becuase at the time, its one-letter long title wasn't picked up with my logic. All in all, the 
+becuase at the time, its one-letter long title wasn't picked up with my logic. Also, had a minor
+issue with the logic behind shifting the currently playing song's index. All in all, the 
 development and testing process went great.

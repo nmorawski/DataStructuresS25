@@ -1,14 +1,15 @@
 "All Too Well" Taylor Swift
 "Bad Blood" Taylor Swift
 "Mean" Taylor Swift
+"You Are Still the One" Shania Twain
 "Safe And Sound" Taylor Swift
 "Chasing Pavements" Adele
 "Easy On Me" Adele
 "Hello" Adele
 "Rolling In The Deep" Adele
-"Set Fire To The Rain" Adele current
+"Set Fire To The Rain" Adele
 "Bad Romance" Lady Gaga
-"I'll Never Love Again" Lady Gaga
+"I'll Never Love Again" Lady Gaga current
 "Joanne" Lady Gaga
 "Rain On Me" Lady Gaga
 "Shallow" Lady Gaga
@@ -22,3 +23,6 @@
 "New Rules" Dua Lipa
 "Break My Heart" Dua Lipa
 "Be the One" Dua Lipa
+"Umbrella" Rihanna
+"We Are Young" Fun
+"Viva La Vida" Coldplay

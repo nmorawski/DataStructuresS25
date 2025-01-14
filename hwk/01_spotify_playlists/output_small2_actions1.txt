@@ -1,15 +1,12 @@
-"Someone Like You" Adele
 "Rocket Man" Elton John
-"Happier" Marshmello
-"Blinding Lights" The Weeknd
-"Levitating" Dua Lipa
 "Someone You Loved" Lewis Capaldi
-"Imagine" John Lennon
+"Shape of You" Ed Sheeran
+"You Are Still the One" Shania Twain
 "Perfect" Ed Sheeran
-"Hotel California" Eagles
-"Happier Than Ever" Billie Eilish
+"Happier Than Ever" Billie Eilish current
 "bad guy" Billie Eilish
-"Skyfall" Adele current
+"Skyfall" Adele
+"Rolling in the Deep" Adele
 "Thinking Out Loud" Ed Sheeran
 "Take Me to Church" Hozier
 "Just the Way You Are" Bruno Mars
@@ -23,16 +20,9 @@
 "drivers license" Olivia Rodrigo
 "All of Me" John Legend
 "Ordinary People" John Legend
-"Don't Start Now" Dua Lipa
-"Bohemian Rhapsody" Queen
-"Stairway to Heaven" Led Zeppelin
-"Smells Like Teen Spirit" Nirvana
-"Like a Rolling Stone" Bob Dylan
-"Hey Jude" The Beatles
-"Shape of You" Ed Sheeran
 "Someone Like You" Adele
-"Perfect" Ed Sheeran
-"Rolling in the Deep" Adele
-"Bad Guy" Billie Eilish
-"Dance Monkey" Tones and I
 "Levitating" Dua Lipa
+"Don't Start Now" Dua Lipa
+"Umbrella" Rihanna
+"We Are Young" Fun
+"Viva La Vida" Coldplay

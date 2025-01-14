@@ -7,39 +7,63 @@
 #include <cctype> //Used for isdigit()
 
 /*The function parse_line takes in a string, which is a line in either
-  the library or the playlist input file. It then uses the double 
-  quotation character, '"', as a delimiter. The function then returns a
-  vector of size 2, which includes the song title and the artist(s) credited.*/
-std::vector<std::string> parse_line(const std::string &line){
+  the playlist or the actions input file. If the first character is a double
+  quotation mark ('"'), then we know we are in the playlist file. If so, use that
+  character as delimiter, otherwise use the space character as a delimiter. For
+  the playlist file, a vector will be returned containing the song title, artist. and
+  indication of currently playing, if applicable. Otherwise, it will be a vector of all
+  words/characters separated by spaces, to be parsed later in the parse_command function.*/
+std::vector<std::string> parse_line(std::string &line){
     std::vector<std::string> results;
     std::stringstream ss(line);
     std::string name;
+    std::string band;
+    std::string current_song_check = " current";
 
-    while (getline(ss, name, '"')) {
-        if (name.size() > 0) //Don't include empty characters
-            results.push_back(name);
+    if (line[0] == '"'){//Determines if playlist or actions parsing
+        while (getline(ss, name, '"')) {
+            if (name.size() > 0) //Don't include empty characters
+                results.push_back(name);
+        }
+        band = results[1];
+        //Way to check if currently playing song or not
+        if (band.size() > current_song_check.size()){
+            //Check to see if last part of string says current
+            if (band.substr(band.length() - current_song_check.size()) == current_song_check){
+                results[1] = band.substr(0, band.length() - current_song_check.size());
+                results.push_back(current_song_check);
+            }
+        }
+    } else {
+        while (getline(ss, name, ' ')) {
+            if (name.size() > 0)
+                results.push_back(name);
+        }
     }
-
     return results;
 }
 
-/*The function parse_file takes in an input file, along with two vectors of strings
-  that represent all of the song titles from the input file, along with all of the 
-  credited artists. The function goes line by line in the input file, and while there
-  is text to retrieve, parse_line is called, and the values produced are saved in their
-  respective vector of strings. This function is used interchangeablywith the playlist
-  and library input files.*/
-int parse_file(std::ifstream& input, std::vector<std::string>& song_list, 
-        std::vector<std::string>& band_list){
+/*The function parse_playlist takes in the playlist file as an input, along with two 
+  vectors of strings that represent all of the song titles from the input file, along 
+  with all of the credited artists. The function goes line by line in the input file, 
+  and while there is text to retrieve, parse_line is called, and the values produced 
+  are saved in their respective vector of strings. The location of the currently playing
+  song is also passed to store while parsing the playlist.*/
+int parse_playlist(std::ifstream &input, std::vector<std::string> &songs, std::vector<std::string>
+    &artists, int &current){
     if (input.is_open()){//If the file is open
         std::string row;
         std::vector<std::string> line;
+        int playlist_index = 0;
         while (input.good()){//While there is text to retrieve. store each line in the vector
             getline(input, row);
             if (row.size() > 0) {
                 line = parse_line(row);
-                song_list.push_back(line[0]);
-                band_list.push_back(line[1].substr(1, line[1].size()));
+                songs.push_back(line[0]);
+                artists.push_back(line[1].substr(1, line[1].size()));
+                if (line.size() == 3) //Currently playing song
+                    current = playlist_index;
+                playlist_index++;
             }
         }
         input.close();
@@ -50,129 +74,218 @@ int parse_file(std::ifstream& input, std::vector<std::string>& song_list,
     }
 }
 
-/*The function find_song takes in a string, the desired song title, and the vector
-  of strings that represents the desired vector of song titles (either the library
-  vector, or the playlist vector). The function loops through the vector, searching
-  for the desired song title. If found, the function will return the song title's index.
-  If not found, the function will return -1 to represent the failure to do so.*/
-int find_song(const std::string title, std::vector<std::string> &songs){
+/*The function is_number is used solely for when the 'move' action is called. The 
+  function takes in a string, which is supposed to be the number at the end of the 
+  command line, and verifies the string is a legitimate number. This is done by
+  verifying each character in the string is numeric.*/
+bool is_number(std::string &num){
+    return std::all_of(num.begin(), num.end(), ::isdigit);
+}
+
+/*The function find_song takes in two strings, the desired song title/artist pair, 
+  and the vectors of strings that represent the playlist. The function loops through 
+  the song_title vector, searching for the desired song title. If found, it will also 
+  to confirm the artist is also correct, as there are instances of several artists
+  having the same name for a song. If that also passes, the function will return the 
+  song title's index. If not found, the function will return -1 to represent the failure
+  to do so.*/
+int find_song(std::string &title, std::string &artist, std::vector<std::string> &songs, 
+    std::vector<std::string> &bands){
     unsigned int song_index = 0;
     std::string lib_title = "";
+    std::string lib_band = "";
     while (title != lib_title && song_index < songs.size()){
         lib_title = songs[song_index];
+        lib_band = bands[song_index];
         song_index++;
+        if (title == lib_title && lib_band != artist)//Check artist match
+            lib_title = "";
     }
     if (title == lib_title)//Match found
         return song_index - 1;
     return -1;
 }
 
-/*The function is_number is used solely for when the 'move' action is called. The 
-  function takes in a string, which is supposed to be the number at the end of the 
-  command line, and verifies the string is a legitimate number. This is done by
-  verifying each character in the string is numeric.*/
-bool is_number(const std::string num){
-    return std::all_of(num.begin(), num.end(), ::isdigit);
+/*The function parse_command takes a parsed line from the actions input file and 
+  concatenates the necessary strings, aminly by noting where the double quotation 
+  marks are for the song title, then the remaining terms for the song artist(s), 
+  unless thhe action is to move a song in the playlist, for which it also stores
+  the location of where the song is to be moved.*/
+std::vector<std::string> parse_command(std::vector<std::string> &cmd){
+    std::vector<std::string> command;
+    if (cmd.size() > 1){ //If previous/next command, skip
+        std::string title = cmd[1].substr(1, cmd[1].size()); //First word of title
+        int cmd_index = 1;
+        if (title[title.size()-1] != '"'){
+            while (cmd[cmd_index].back() != '"'){
+                cmd_index++;
+                title += " " + cmd[cmd_index];
+            }
+        }
+        title.pop_back(); //Remove second '"' from song title
+        command.push_back(title);
+        std::string band = cmd[cmd_index+1];
+        if (cmd.size() > cmd_index+2){ //If band name > 1 word
+            for (int i = cmd_index+2; i < cmd.size()-1; i++)
+                band += " " + cmd[i];
+        }
+        if (cmd[0] == "move"){
+            command.push_back(band);
+            command.push_back(cmd[cmd.size()-1]);
+        } else if (cmd.size() > cmd_index+2){ //If band name > 1 word
+            band += " " + cmd[cmd.size()-1];
+            command.push_back(band);
+        } else {
+            command.push_back(band);
+        }
+    }
+    return command;
 }
 
-int main(int argc, char* argv[]){
-    std::string song_name;
-    std::string artist;
-
-    //Chose to have two vectors of string to represent an input file instead
-    //of a 2-D vector (std::vector< std::vector<std::string>>) to reduce complexity.
-    std::vector<std::string> library_songs; //Song titles from library input
-    std::vector<std::string> library_artists; //Artists from library input
-    std::vector<std::string> playlist_songs; //Song titles from playlist input
-    std::vector<std::string> playlist_artists; //Artists from playlist input
-
-    std::ifstream playlist_input(argv[1]);
-    std::ifstream lib_input(argv[2]);
-    std::ofstream output(argv[3]);
-
-    parse_file(lib_input, library_songs, library_artists);//Parsed Library
-    parse_file(playlist_input, playlist_songs, playlist_artists);//Parsed playlist
-
-    if (argv[4] == std::string("add")){//Add command
-        if (argc != 6){
-            std::cerr << "Incorrect amount of command line arguments." << std::endl;
-            return 1;
-        } else {
-           //Search for song title in library. If found, add the respective title and
-           //artists to the end of the playlist (the two playlist vectors).
-            song_name = argv[5];
-            int song_loc = find_song(song_name,library_songs);
-            if (song_loc != -1){//If song found
-                playlist_songs.push_back(library_songs[song_loc]);
-                playlist_artists.push_back(library_artists[song_loc]);
-            } else {
-                std::cerr << "Requested song could not be found." << std::endl;
-                return 1;
-            }
-        }
-    } else if (argv[4] == std::string("remove")){//Remove command
-        if (argc != 6){
-            std::cerr << "Incorrect amount of command line arguments." << std::endl;
-            return 1;
-        } else {
-           //Search for song title in playlist. If found, remove the respective title and
-           //artists from their current location in the playlist (the two playlist vectors).
-            song_name = argv[5];
-            int song_loc = find_song(song_name,playlist_songs);
-            if (song_loc != -1){//If song found
-                playlist_songs.erase(playlist_songs.begin() + song_loc);
-                playlist_artists.erase(playlist_artists.begin() + song_loc);
-            } else {
-                std::cerr << "Requested song could not be found." << std::endl;
-                return 1;
-            }
-        }
-    } else if (argv[4] == std::string("move")){
-        if (argc != 7){
-            std::cerr << "Incorrect amount of command line arguments." << std::endl;
-            return 1;
-        } else {
-           /*Search for song title in playlist. If found, remove the respective title and
-             artists from their current location in the playlist (the two playlist vectors)
-             and re-insert back in the playlist in the desired position (desired placement
-             minus 1 to determine vector index).*/
-            song_name = argv[5];
-            int song_loc = find_song(song_name,playlist_songs);
-            if (song_loc != -1){//If song found
-                if (is_number(argv[6]) && std::stoi(argv[6]) <= playlist_songs.size()){
-                    int playlist_loc = std::stoi(argv[6]);
-                    std::string selected_artist = playlist_artists[song_loc];
-                    
-                    playlist_songs.erase(playlist_songs.begin() + song_loc);
-                    playlist_songs.insert(playlist_songs.begin() + (playlist_loc - 1), song_name);
-
-                    playlist_artists.erase(playlist_artists.begin() + song_loc);
-                    playlist_artists.insert(playlist_artists.begin() + (playlist_loc - 1), 
-                        selected_artist);
-                } else {
-                   std::cerr << "Move request could not be made." << std::endl;
-                    return 1; 
-                }
-            } else {
-                std::cerr << "Requested song could not be found." << std::endl;
-                return 1;
-            }
-        }
+/*The function remove_song calls find_song to locate the desired song to be deleted. If
+  found, remove, otherwise throw an error.*/
+int remove_song(std::vector<std::string> &cmd, std::vector<std::string> &song_list, 
+    std::vector<std::string> &artist_list, int &loc){
+    int song_loc = find_song(cmd[0], cmd[1], song_list, artist_list);
+    if (song_loc != -1){//If song found
+        song_list.erase(song_list.begin() + song_loc);
+        artist_list.erase(artist_list.begin() + song_loc);
+        if (song_loc <= loc) //Song removed before currently playing, shift current index
+            loc--;
     } else {
-        std::cerr << "Invalid command given." << std::endl;
+        std::cerr << "Requested song could not be found." << std::endl;
         return 1;
     }
-    /*Open the desired output file and loop through the playlist song vector. Both the
-      song and artist vectors are the same size, and each index matches, so we only need
-      one for loop. Print one song-artist combination per line until completion.*/
-    if (output.is_open()){//If the file is open
-        for (unsigned int i = 0; i < playlist_songs.size(); i++)
-            output << '"' << playlist_songs[i] << "\" " << playlist_artists[i] << "\n";
-        output.close();
+    return 0; //MOVE PLACEMENT
+}
+
+/*The function move_song calls find_song to locate the desired song to be moved. If
+  found, check if the new location is a valid number and position, then execute.*/
+int move_song(std::vector<std::string> &cmd, std::vector<std::string> &song_list, 
+    std::vector<std::string> &artist_list, int &loc){
+    int song_loc = find_song(cmd[0], cmd[1], song_list, artist_list);
+    if (song_loc != -1){//If song found
+        std::string is_num = cmd[2];
+        if (is_number(is_num) && std::stoi(is_num) <= song_list.size()){
+            int new_loc = std::stoi(is_num) - 1;
+                    
+            song_list.erase(song_list.begin() + song_loc);
+            song_list.insert(song_list.begin() + new_loc, cmd[0]);
+
+            artist_list.erase(artist_list.begin() + song_loc);
+            artist_list.insert(artist_list.begin() + new_loc, cmd[1]);
+
+            //Logic required for shifting currently playing index. need to change index when:
+            //- Currently playing song is moved to new location
+            //- Moved song goes from being after currently playing song to before it
+            //- Moved song goes from being before currently playing song to after it
+            if (song_loc == loc)
+                loc = new_loc;
+            else if (new_loc <= loc && loc < song_loc)
+                loc++;
+            else if (new_loc >= loc && loc > song_loc)
+                loc--;
+            return 0;
+        } else {
+            std::cerr << "Move request could not be made." << std::endl;
+            return 1; 
+        }
+    } else {
+        std::cerr << "Requested song could not be found." << std::endl;
+        return 1;
+    }
+}
+
+/*The function skip_song takes one of the previous/next commands, the current index of the
+  playing song, as well as number of songs in the playlist. The index changes based on the
+  the command called, and is moved in accordance to boundary conflicts. */
+void skip_song(const std::string &cmd, int &loc, const int &song_count){
+    if (cmd == "previous"){
+        loc--;
+        if (loc < 0)
+            loc = song_count - 1;
+    } else if (cmd == "next"){
+        loc++;
+        if (loc >= song_count)
+            loc = 0;
+    }
+}
+
+/*The function perform-actions takes in the actions file as an input, along with two 
+  vectors of strings that represent all of the song titles from the input file, along 
+  with all of the credited artists. The function goes line by line in the input file, 
+  and while there is text to retrieve, parse_line is called, then parse_command to get 
+  a simple vector of 3-4 elements long, stored as [command, song title, artist(s), move
+  location, if necessary]. Depending on the command, one of four actions will be performed
+  with the add command simply adding song and artist(s) to the playlist vectors.*/
+int perform_actions(std::ifstream &input, std::vector<std::string> &songs, std::vector<std::string>
+    &artists, int &current){
+    if (input.is_open()){//If the file is open
+        std::string row;
+        std::vector<std::string> line;
+        while (input.good()){//While there is text to retrieve, store each line in the vector
+            getline(input, row);
+            if (row.size() > 0) {
+                line = parse_line(row);
+                std::vector<std::string> action = parse_command(line);
+
+                if (line[0] == "add"){
+                    songs.push_back(action[0]);
+                    artists.push_back(action[1]);
+                } else if (line[0] == "remove"){
+                    remove_song(action, songs, artists, current);
+                } else if (line[0] == "move"){
+                    move_song(action, songs, artists, current);
+                } else if (line[0] == "previous" || line[0] == "next"){
+                    skip_song(line[0], current, songs.size());
+                } else {
+                    std::cerr << "Invalid action requested." <<std::endl;
+                    return 1;
+                }
+                std::cout << current <<std::endl;
+            }
+        }
+        input.close();
+        return 0;
     } else {
         std::cerr << "Unable to open file" <<std::endl;
         return 1;
     }
+}
 
-    return 0;
+//./nyplaylists.exe playlist_tiny1.txt actions1.txt output.txt
+int main(int argc, char* argv[]){
+    if (argc == 4){
+        std::ifstream playlist(argv[1]);
+        std::ifstream actions(argv[2]);
+        std::ofstream output(argv[3]);
+
+        std::vector<std::string> playlist_songs; //Song titles from playlist input
+        std::vector<std::string> playlist_artists; //Respective artist(s) from playlist input
+        int current_song; //Currently playing index
+
+        parse_playlist(playlist, playlist_songs, playlist_artists, current_song);
+
+        perform_actions(actions, playlist_songs, playlist_artists, current_song);
+
+        /*Open the desired output file and loop through the playlist song vector. Both the
+        song and artist vectors are the same size, and each index matches, so we only need
+        one for loop. Print one song-artist combination per line until completion.*/
+        if (output.is_open()){
+            for (unsigned int i = 0; i < playlist_songs.size(); i++){
+                output << '"' << playlist_songs[i] << "\" " << playlist_artists[i];
+                if (i == current_song)//If currently played song
+                    output << " current";
+                output << "\n";
+            }
+            output.close();
+        } else {
+            std::cerr << "Unable to open file" <<std::endl;
+            return 1;
+        }
+
+    } else {
+        std::cerr << "Incorrect amount of command line arguments." <<std::endl;
+        return 1;
+    }
 }
