@@ -38,8 +38,8 @@ void Time::PrintAMPM() const {
         std::cout << hour_time << ":" << ((minute < 10) ? "0" : "") << minute 
             << ":" << ((second < 10) ?"0":"") << second << " pm" << std::endl;
     } else {
-        if (hour == 24){
-            std::cout << "0" << ":" << ((minute < 10) ? "0" : "") << minute 
+        if (hour == 24 || hour == 0){
+            std::cout << "12" << ":" << ((minute < 10) ? "0" : "") << minute 
             << ":" << ((second < 10) ? "0" : "") << second << " am" << std::endl;
         } else {
         std::cout << hour << ":" << ((minute < 10) ? "0" : "") << minute 
