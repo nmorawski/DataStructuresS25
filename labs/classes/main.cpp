@@ -72,7 +72,7 @@ int main() {
   times.push_back(Time(14,14,14));
   times.push_back(Time(3,3,3));
   
-  for (int i = 0; i < times.size(); i++) {
+  for (unsigned int i = 0; i < times.size(); i++) {
     times[i].PrintAMPM();
   }
   
