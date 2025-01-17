@@ -6,6 +6,7 @@
 #include <string> //Includes strings
 #include <vector> //Includes vectors
 #include "rider.h"
+#include "location.h"
 
 //Sandra Huang Female 25 853-977-5304 3.1 40.4269 -73.0753 Standard On_the_way_to_pickup Michael Richard 445-915-1645
 //William David Male 37 324-571-7028 3.8 40.2445 -73.5073 Premium Available null null null
@@ -26,11 +27,11 @@ Driver's first name
 */
 class Driver {
 public:
-Driver(std::string const name, std::string  const &phone_number, double &rating, 
-    std::vector<double> location, std::string &vehicle, std::string state, Rider rider);
+Driver(std::string name, std::string phone_number, double rating, 
+    Location location, std::string vehicle, std::string state, Rider rider);
 Driver(std::string const name, std::string  const &phone_number);
 // ACCESSORS
-Rider& getRider() const { return rider_; }
+Rider getRider() const { return rider_; }
 std::string getName() const { return name_; }
 std::string getPhone() const { return phone_; }
 double getRating() const { return rating_; }
