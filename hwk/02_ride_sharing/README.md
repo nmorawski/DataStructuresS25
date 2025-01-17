@@ -342,15 +342,15 @@ A: Same as Uber. One decimal place. Just trim it. For example, if the distance i
 
 ## Program Requirements & Submission Details
 
-In this assignment, you are required to use a vector to store all drivers, and use a vector to store all riders. You are NOT allowed to use any data structures we have not learned so far, especially std::list.
+In this assignment, you are required to use a vector to store all drivers, and use a vector to store all riders. You are NOT allowed to use any data structures we have not learned so far, especially std::list. Your program should involve the definition of at least two classes that have their own .h and .cpp files, named appropriately.
 
 Use good coding style when you design and implement your program. Organize your program into functions:
-don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
+don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
 to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
-You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your
+You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your
 README.txt file. 
 
-**Due Date**: 01/25/2024, Thursday, 10pm.
+**Due Date**: 01/23/2025, Thursday, 10pm.
 
 ## Rubric
 
@@ -362,6 +362,8 @@ README.txt file.
    - No reflection. (-1)
  - OVERALL CLASS DECLARATION & IMPLEMENTATION AND CODING STYLE (Good class design, split into a .h and .cpp file.  Functions > 1 line are in .cpp file.  Organized class implementation and reasonable comments throughout. Correct use of const/const& and of class method const. ) (6 pts)
    - No credit (significantly incomplete implementation) (-6)
+   - Does not successfully declare & use any new classes. (-6)
+   - Only declares/uses a single class. (-5)
    - Putting almost everything in the main function. It's better to create separate functions for different tasks. (-2)
    - Improper uses or omissions of const and reference. (-1)
    - Function bodies containing more than one statement are placed in the .h file. (okay for templated classes) (-2)
@@ -370,7 +372,7 @@ README.txt file.
    - Poor file organization: Puts more than one class in a file (okay for very small helper classes) (-1)
    - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc. (-2)
    - Uses global variables. (-1)
-   - Contains useless comments like commented-out code, terminal commands, or silly notes. (-1)
+<!--   - Contains useless comments like commented-out code, terminal commands, or silly notes. (-1)-->
  - DATA REPRESENTATION (Must use vectors for the implementation.) (5 pts)
    - No credit (significantly incomplete implementation). (-5)
    - Does not use std::vector to store drivers or riders. (-5)
