@@ -1,0 +1,48 @@
+Notes on compilation:
+- Command used: g++ roads.cpp line.cpp point.cpp -o roads.exe -g -Wall -Wextra
+COMPILATION ERRORS:
+- roads.cpp:23:8: error: ‘sort’ is not a member of ‘std’; did you mean ‘sqrt’?
+   23 |   std::sort(roads.begin(),roads.end(), steeper_gradient);
+   - This is definitely meant to be std::sort, must include <algorithm>
+- point.h:8:7: error: redefinition of ‘class Point’
+    8 | class Point {
+    - Need header guard
+
+CURRENT WARNINGS:
+roads.cpp: In function ‘std::vector<Line>& load(std::ifstream&)’:
+roads.cpp:18:10: warning: reference to local variable ‘roads’ returned [-Wreturn-local-addr]
+   18 |   return roads;
+      |          ^~~~~
+roads.cpp:13:21: note: declared here
+   13 |   std::vector<Line> roads;
+      |                     ^~~~~
+- Function is pass-by-reference, do not need to return vector.
+
+roads.cpp: In function ‘void print(const std::vector<Line>&)’:
+roads.cpp:32:21: warning: comparison of integer expressions of different signedness: ‘int’ and ‘std::vector<Line>::size_type’ {aka ‘long unsigned int’} [-Wsign-compare]
+   32 |   for (int i = 0; i < roads.size(); i++) {
+      |                   ~~^~~~~~~~~~~~~~
+- i is stored as int, roads.size() is a different variable type (long, unsigned int)
+
+roads.cpp:39:10: warning: comparison of unsigned expression >= 0 is always true [-Wtype-limits]
+   39 |        i >= 0  && gradient(roads[i]) < 10.0;
+      |        ~~^~~~
+- i is an unsigned int, meaning its impossible for it to be i<0, i >= 0 is redundant
+
+line.cpp: In function ‘double gradient(const Line&)’:
+line.cpp:25:14: warning: statement has no effect [-Wunused-value]
+   25 |     gradient * -1;
+      |     ~~~~~~~~~^~~~
+- Value of gradient is not being saved, (should be something like gradient = gradient * -1)
+
+line.cpp: In function ‘bool steeper_gradient(const Line&, const Line&)’:
+line.cpp:40:1: warning: control reaches end of non-void function [-Wreturn-type]
+   40 | }
+      | ^
+- Potential for function to not return anything (line1=line2), function is boolean (important fix)
+
+point.cpp: In function ‘double compute_slope(const Point&, const Point&)’:
+point.cpp:23:10: warning: unused variable ‘answer’ [-Wunused-variable]
+   23 |   double answer = rise / run;
+      |          ^~~~~~
+- answer is stored as rise / run, yet not used in return statement

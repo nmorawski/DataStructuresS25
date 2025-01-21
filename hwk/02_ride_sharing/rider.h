@@ -27,7 +27,8 @@ std::string getState() const { return state_; }
 // MODIFIERS
 void setDriver(Driver driver) { driver_ = driver; }
 void setState(std::string state) { state_ = state; }
-//void setLocation(std::vector<double> location);
+void setStartLoc(Location location) { pickup_location_ = location; }
+void setEndLoc(Location location) { dropoff_location_ = location; }
 
 private: // REPRESENTATION (member variables)
 Driver driver_;

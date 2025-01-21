@@ -74,7 +74,22 @@ std::string verify_phone(const std::string &phone, const std::vector<Rider> &rid
 
 int ride_command(const std::string &cmd, const std::string &phone_number, std::vector<Driver> 
     &drivers_vec, std::vector<Rider> &riders_vec, std::ofstream &output) {
-    std::string phone_verification = verify_phone(phone_number, riders_vec);
+        //Decide how to work around cancel (both rider and driver can cancel)
+    if (cmd == "request"){
+
+    } else if (cmd == "cancel"){
+
+    } else {
+        std::cerr << "Invalid command requested." <<std::endl;
+        return 1;
+    }
+    
+    
+    
+    
+    
+    
+    std::string phone_verification = verify_phone(phone_number, riders_vec, drivers_vec);
 
     if (phone_verification.back() == 'n'){
         Rider desired_rider = riders_vec[std::stoi(phone_verification)];
@@ -95,10 +110,6 @@ int ride_command(const std::string &cmd, const std::string &phone_number, std::v
 
 //nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber request (8)
 //nyride.exe drivers.txt riders.txt output0.txt output1.txt output2.txt phoneNumber cancel (8)
-//nyride.exe drivers.txt out_drivers.txt remove 3.5 (removing drivers under specified rating) (5)
-//nyride.exe drivers.txt riders.txt search all (5)
-//nyride.exe drivers.txt riders.txt search rider_id (5)
-//nyride.exe drivers.txt riders.txt search driver_id (all 3 ride monitoring) (5)
 
 int main(int argc, char* argv[]){
     std::ifstream driver_list(argv[1]);

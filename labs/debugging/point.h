@@ -1,3 +1,6 @@
+#ifndef __POINT_H
+#define __POINT_H
+
 #include <iostream>
 
 
@@ -26,3 +29,5 @@ std::ostream& operator<< (std::ostream &ostr, const Point &p);
 
 // A helper function to compute the slope between two Points.
 double compute_slope(const Point &a, const Point &b);
+
+#endif
