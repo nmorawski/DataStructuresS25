@@ -22,7 +22,7 @@ double gradient(const Line &ln) {
   float gradient = 100.0 * fabs(slope);
   // take the absolute value
   if (gradient < 0) {
-    gradient * -1;
+    gradient = gradient * -1;
   }
   return gradient;
 }
@@ -37,6 +37,7 @@ bool steeper_gradient(const Line &m, const Line &n) {
     return true;
   if (gradient_n > gradient_m)
     return false;
+  return true;
 }
 
 

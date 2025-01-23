@@ -21,5 +21,5 @@ double compute_slope(const Point &a, const Point &b) {
   double run_z = b.get_z() - a.get_z();
   double run = sqrt(run_x*run_x + run_z*run_z);
   double answer = rise / run;
-  return rise / run;
+  return answer;
 }

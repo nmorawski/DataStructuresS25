@@ -9,7 +9,7 @@
 
 
 // A helper function to parse a collection of files from an input file.
-std::vector<Line>& load(std::ifstream &istr) {
+std::vector<Line> load(std::ifstream &istr) {
   std::vector<Line> roads;
   float x1,y1,z1,x2,y2,z2;
   while (istr >> x1 >> y1 >> z1 >> x2 >> y2 >> z2) {
@@ -29,16 +29,17 @@ void organize(std::vector<Line> &roads) {
 void print(const std::vector<Line> &roads) {
 
   // print each road in the current, sorted order (steepest first)
-  for (int i = 0; i < roads.size(); i++) {
+  for (unsigned int i = 0; i < roads.size(); i++) {
     std::cout << roads[i] << std::endl;
   }
 
   // count the number of roads with gradient less than 10%
-  int count;
-  for (unsigned int i = roads.size() - 1;
-       i >= 0  && gradient(roads[i]) < 10.0;
-       i--) {
-    count++;
+  int count = 0;
+  for (unsigned int i = 0;
+       i < roads.size();
+       i++) {
+    if (gradient(roads[i]) < 10.0)
+      count++;
   }
   std::cout << "There are " << count << " road(s) with gradient less than 10%." << std::endl;
 }
