@@ -3,6 +3,7 @@
 
 #include "rider.h"
 
+// Rider constructor
 Rider::Rider(const std::string fname, const std::string lname, const std::string gender, const int age, 
     const std::string phone_number, const double rating, Location pickup_loc, Location dropoff_loc,
     const std::string vehicle, std::string state, std::string d_fname, std::string d_lname, 
@@ -23,6 +24,8 @@ Rider::Rider(const std::string fname, const std::string lname, const std::string
     d_num_ = d_num;
 }
 
+// Function used to store all of one rider's info into a single string/line,
+// which is then added to the output file that represents all rider info
 std::string Rider::printRider() {
     std::string line = fname_;
     line += " " + lname_;

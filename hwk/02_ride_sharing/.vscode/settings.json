@@ -62,6 +62,11 @@
         "numbers": "cpp",
         "bitset": "cpp",
         "regex": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "locale": "cpp",
+        "xlocbuf": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }

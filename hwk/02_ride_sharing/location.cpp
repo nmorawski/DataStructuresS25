@@ -22,7 +22,8 @@ Location::Location(double loc_lat, double loc_long) {
     latitude_ = loc_lat;
     longitude_ = loc_long;
 }
-
+// Helper function for converting doubles into strings and removes trailing
+// zeroes. Used by both the Rider and Driver class, so I implemented here.
 std::string remove_zeroes(double d){
     std::string val = std::to_string(d);
     val = val.erase(val.find_last_not_of('0') + 1);

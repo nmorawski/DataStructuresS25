@@ -1,7 +1,7 @@
 HOMEWORK 2: Ride Sharing
 
 
-NAME:  < insert name >
+NAME:  Nicolas Morawski
 
 
 COLLABORATORS AND OTHER RESOURCES:
@@ -10,13 +10,15 @@ List the names of everyone you talked to about this assignment
 LMS, etc.), and all of the resources (books, online reference
 material, etc.) you consulted in completing this assignment.
 
-< insert collaborators / resources >
+cppreference.com (regex_match)
+cplusplus.com
+(Used both resources for syntax references)
 
 Remember: Your implementation for this assignment must be done on your
 own, as described in "Academic Integrity for Homework" handout.
 
 
-ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  < insert # hours >
+ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  8-10 hours
 
 
 MISC. COMMENTS TO GRADER:
@@ -33,4 +35,9 @@ What parts of the assignment did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this assignment? How well
 did the development and testing process go for you?
 
-< insert reflection >
+The entire homework was relatively starightforward, all issues that occurred were
+silly syntax erorrs, other than one big issue that was stopping me from compiling. With
+my original plan, I was storing a default Rider object in each Driver class (to represent 
+the corresponding riders' info), and vice versa. Because I was calling both the Driver and Rider
+classes within each other, I created a circle dependency error that prevented my code form running.
+To solve this, I simplified my code and just simply stored this info as std::strings.

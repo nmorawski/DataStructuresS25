@@ -2,9 +2,9 @@
 #define __RIDER_H
 
 #include <iostream> 
-#include <fstream> //Include file streams
-#include <string> //Includes strings
-#include <vector> //Includes vectors
+#include <fstream> 
+#include <string> 
+#include <vector>
 #include "location.h"
 
 class Rider {
@@ -34,7 +34,7 @@ void setDriverFName(std::string d_fname) { d_fname_ = d_fname; }
 void setDriverLName(std::string d_lname) { d_lname_ = d_lname; }
 void setDriverNum(std::string d_num) { d_num_ = d_num; }
 
-std::string printRider();
+std::string printRider(); //Used for message output
 
 private: // REPRESENTATION (member variables)
 Location pickup_location_;
