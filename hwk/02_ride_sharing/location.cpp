@@ -5,6 +5,12 @@
 #include <cmath>
 #include "location.h"
 
+Location::Location(){
+    name_ = "null";
+    latitude_ = 0;
+    longitude_ = 0;
+}
+
 Location::Location(std::string loc_name, double loc_lat, double loc_long) {
     name_ = loc_name;
     latitude_ = loc_lat;
@@ -15,6 +21,13 @@ Location::Location(double loc_lat, double loc_long) {
     name_ = "null";
     latitude_ = loc_lat;
     longitude_ = loc_long;
+}
+
+std::string remove_zeroes(double d){
+    std::string val = std::to_string(d);
+    val = val.erase(val.find_last_not_of('0') + 1);
+    if (val.back() == '.') { val.pop_back();}
+    return val;
 }
 
 //Calculate the distance between two coordinates using Haversine formula (given function)

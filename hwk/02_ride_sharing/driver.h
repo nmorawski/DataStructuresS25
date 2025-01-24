@@ -5,53 +5,52 @@
 #include <fstream> //Include file streams
 #include <string> //Includes strings
 #include <vector> //Includes vectors
-#include "rider.h"
 #include "location.h"
 
-//Sandra Huang Female 25 853-977-5304 3.1 40.4269 -73.0753 Standard On_the_way_to_pickup Michael Richard 445-915-1645
-//William David Male 37 324-571-7028 3.8 40.2445 -73.5073 Premium Available null null null
-/*
-Driver's first name
-- Driver's last name
-- Driver's gender
-- Driver's age
-- Driver's phone number
-- Driver's rating
-- Driver's current latitude
-- Driver's current longitude
-- Driver's vehicle type
-- Driver's current state
-- Rider's first name
-- Rider's last name
-- Rider's phone number
-*/
 class Driver {
 public:
-Driver(std::string name, std::string phone_number, double rating, 
-    Location location, std::string vehicle, std::string state, Rider rider);
-Driver(std::string const name, std::string  const &phone_number);
+Driver(const std::string fname, const std::string lname, const std::string gender, 
+    const int age, const std::string phone_number, double rating, Location location, 
+    std::string vehicle, std::string state, std::string r_fname, std::string r_lname, 
+    std::string r_num);
 // ACCESSORS
-Rider getRider() const { return rider_; }
-std::string getName() const { return name_; }
+std::string getFName() const { return fname_; }
+std::string getLName() const { return lname_; }
+std::string getGender() const { return gender_; }
+int getAge() const { return age_; }
 std::string getPhone() const { return phone_; }
 double getRating() const { return rating_; }
-std::vector<double> getLocation() const { return location_; }
+Location getLocation() const { return location_; }
 std::string getVehicle() const { return vehicle_; }
 std::string getState() const { return state_; }
+double getDistance() const { return distance_; }
+std::string getRiderFName() const { return r_fname_; }
+std::string getRiderLName() const { return r_lname_; }
+std::string getRiderNum() const { return r_num_; }
 // MODIFIERS
-void setRider(Rider rider);
-void setState(std::string state);
-void setLocation(std::vector<double> location);
+void setState(std::string state) { state_ = state; }
+void setLocation(Location location) { location_ = location; }
+void setDistance(double distance) { distance_ = distance; }
+void setRiderFName(std::string r_fname) { r_fname_ = r_fname; }
+void setRiderLName(std::string r_lname) { r_lname_ = r_lname; }
+void setRiderNum(std::string r_num) { r_num_ = r_num; }
+
+std::string printDriver();
 
 private: // REPRESENTATION (member variables)
-Rider rider_;
-std::string name_;
+std::string fname_;
+std::string lname_;
+std::string gender_;
+int age_;
 std::string phone_;
 double rating_;
-std::vector<double> location_;
+Location location_;
 std::string vehicle_;
 std::string state_;
-
+double distance_;
+std::string r_fname_;
+std::string r_lname_;
+std::string r_num_;
 };
 
 #endif

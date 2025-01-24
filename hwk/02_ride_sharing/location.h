@@ -5,6 +5,7 @@
 
 class Location {
 public:
+Location();
 Location(std::string loc_name, double loc_lat, double loc_long);
 Location(double loc_lat, double loc_long);
 // ACCESSORS
@@ -23,6 +24,8 @@ double longitude_;
 
 };
 
-double calculateDistance(const double &loc1, const double &loc2);
+double calculateDistance(const Location &loc1, const Location &loc2);
+
+std::string remove_zeroes(double d);
 
 #endif
