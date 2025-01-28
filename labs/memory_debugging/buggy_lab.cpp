@@ -44,10 +44,11 @@ void identifyMeanAndMin(const std::string& filename) {
    float* avg;
 
    /** PART 1: ADD CODE BELOW **/
-
-
-
-
+   // Pointers declared/initialized, but pointers are addresses, not "distinct" values
+    numElements = new int;
+    sum = new int;
+    smallestNum = new int;
+    avg = new float;
    /** PART 1: ADD CODE ABOVE **/
 
    *numElements = 0;
@@ -65,11 +66,12 @@ void identifyMeanAndMin(const std::string& filename) {
    std::cout << "Printing the contents of the array in reverse order:  ";
 
    /** PART 2: MODIFY CODE BELOW **/
-
-   for (int i = MAX_ARRAY_SIZE; i >= -1; i--) {
+   //For loop expression can't be -1, so changed from -1 to 0
+   //MAX_ARRAY_SIZE has max value, not actual value, *numElements has the correct value
+   for (int i = (*numElements-1); i >= 0; i--) {
        // If we're at the beginning of the for loop, initalize *smallestNum
        // Else, compare *smallestNum to current element in the for loop
-       if (i == MAX_ARRAY_SIZE) {
+       if (i == (*numElements-1)) {
            *smallestNum = *(intArray + i);
        }
 
@@ -98,7 +100,11 @@ void identifyMeanAndMin(const std::string& filename) {
 
    /** PART 3: ADD AND/OR MODIFY CODE BELOW **/
 
-   delete intArray;
+   delete[] intArray;
+   delete numElements;
+   delete sum;
+   delete smallestNum;
+   delete avg;
 
    /** PART 3: ADD AND/OR MODIFY CODE ABOVE **/
 }
@@ -114,3 +120,24 @@ int main() {
    return 0;
 }
 
+/*
+1. With -g, you get source code line #s with errors
+
+2.
+for (int i = (*numElements-1); i >= 0; i--) {
+    if (i == (*numElements-1))
+        *smallestNum = intArray[i];
+    else {
+        if (*smallestNum > intArray[i])
+            *smallestNum = intArray[i];
+    }
+    *sum += intArray[i];
+    std::cout << intArray[i] << " ";
+}
+
+3.
+UNITIALIZED READ = attempts to read from unwritten, but allocated memory
+UNADDRESSABLE ACCESS = read/write of memory allocation thats not allocated
+INVALID HEAP ARGUMENT = misuse of pointer
+LEAK = memory leake present
+*/
