@@ -125,7 +125,7 @@ int main() {
 
 2.
 for (int i = (*numElements-1); i >= 0; i--) {
-    if (i == (*numElements-1))
+    if (i == numElements[0]-1)
         *smallestNum = intArray[i];
     else {
         if (*smallestNum > intArray[i])
