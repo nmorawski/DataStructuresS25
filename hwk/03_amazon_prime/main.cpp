@@ -243,6 +243,19 @@ void process_one_line(int** matrix, int i, std::string& line){
         }
 }
 
+// 500 users (0-499)
+// 110 movies (0-109)
+// 100 shows (0-99)
+//nyrecommender.exe movieRatings.txt showRatings.txt output.txt userID numRecommendations
 int main(int argc, char* argv[]) {
-	return 0;
+	int** movie_ratings;
+    int** show_ratings;
+    //Pass in input files, update 2d arrays
+    //Store arrays in class member variables
+    //From stored userid and number, allocate arrays for recommendations
+    //Call recommendMovies/recommendTVshows
+    //from these arrays, use a specialized print function to output desired info
+    //Upon printinginfo, call delete to delete arrays/2d arrays
+    
+    return 0;
 }
