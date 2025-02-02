@@ -63,7 +63,7 @@ void SimpleTest(){  //well behaved getrow/read after
 	assert(double_compare(d0,0.0));
 	assert(m2_copy.get(1,1,d0));
 	assert(double_compare(d0,27));
-/*
+
 	//Equality and Inequality
 	Matrix m3;
 	assert(m1 == m3);
@@ -157,7 +157,7 @@ void SimpleTest(){  //well behaved getrow/read after
 
 	std::cout << "M11 to be quartered: " << std::endl;
 	std::cout << m11 << std::endl;
-
+/*
 	Matrix* ma1 = NULL;
 	ma1 = m11.quarter();
 	assert(ma1 != NULL);
@@ -201,7 +201,7 @@ void SimpleTest(){  //well behaved getrow/read after
 
 //Write your own test cases here
 void StudentTest(){
-
+	//test swap_row, muliply_coeff, get_col!!!, get_row, transpose
 }
 
 ////////////////Utility functions//////////////////////
@@ -265,7 +265,7 @@ Matrix rref(const Matrix& m){
 			for(unsigned int scan_i = i+1; scan_i < ret.num_rows(); scan_i++){
 				ret.get(scan_i,curr_col,dummy);
 				if(!double_compare(dummy,0.0)){
-					//ret.swap_row(scan_i,i);
+					ret.swap_row(scan_i,i);
 					break;
 				}
 			}

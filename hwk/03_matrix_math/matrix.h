@@ -23,14 +23,14 @@ Matrix(const Matrix& other); //Copy constructor
 unsigned int num_rows() const { return rows_; }
 unsigned int num_cols() const { return columns_; }
 bool get(unsigned int row, unsigned int col, double &val);//return T/F, value found saved to val
-//double* get_row(unsigned int num_row); //If out of bounds, return pointer set to NULL
+double* get_row(unsigned int num_row); //If out of bounds, return pointer set to NULL
 //double* get_col(unsigned int num_col);
 // MODIFIERS
 bool set(unsigned int row, unsigned int col, double val); //return T/F, value found saved as val
-//void multiply_by_coefficient(const double &coeff);
-//bool swap_row(unsigned int source, unsigned int target);
-//bool add(const Matrix& b); //check dimensions the same, return T/F based on result
-//bool subtract(const Matrix& b); //^^^^^^^
+void multiply_by_coefficient(const double &coeff);
+bool swap_row(unsigned int source, unsigned int target);
+bool add(const Matrix& b); //check dimensions the same, return T/F based on result
+bool subtract(const Matrix& b); //^^^^^^^
 
 //void transpose(); //transpose matrix
 /*
@@ -43,14 +43,16 @@ careful about how you construct and return the quadrants
 */
 //Matrix* quarter();
 
+Matrix& operator=(const Matrix& other);
 bool operator==(const Matrix& m2);
 bool operator!=(const Matrix& m2);
-//std::ostream& operator<<(std::ostream& out, const Matrix& m);
 
 private: // REPRESENTATION (member variables)
 double** data;
 unsigned int rows_;
 unsigned int columns_;
 };
+
+std::ostream& operator<<(std::ostream& out, Matrix& m);
 
 #endif

@@ -20,13 +20,6 @@ Matrix::Matrix(unsigned int rows, unsigned int cols, double fill){
         }
     }
 }
-/*
-const int n = 10;
-double a[n];
-double *p;
-for ( p=a; p<a+n; ++p ){
-    *p = sqrt( p-a );
-}*/
 
 Matrix::Matrix(const Matrix& other){
     rows_ = other.rows_;
@@ -55,6 +48,13 @@ bool Matrix::get(unsigned int row, unsigned int col, double &val){
     return false;
 }
 
+Matrix& Matrix::operator=(const Matrix& other) {
+        data = other.data; // Copy data
+        rows_ = other.rows_;
+        columns_ = other.columns_;
+        return *this;
+    }
+
 bool Matrix::operator==(const Matrix& m2){
     if (rows_ != m2.rows_ || columns_ != m2.columns_)
         return false;
@@ -68,7 +68,85 @@ bool Matrix::operator==(const Matrix& m2){
     }
     return true;
 }
-/*std::ostream &Matrix::operator<<(std::ostream &out, const Matrix &m)
-{
-    // TODO: insert return statement here
-}*/
+
+bool Matrix::operator!=(const Matrix& m2){
+    if (rows_ != m2.rows_ || columns_ != m2.columns_)
+        return true;
+    else {
+        for (unsigned int i = 0; i < rows_; i++){
+            for (unsigned int j = 0; j < columns_; ++j){
+                if (data[i][j] != m2.data[i][j])
+                    return true;
+            }
+        }
+    }
+    return false;
+}
+// 0 x 0 matrix: [ ]
+std::ostream& operator<<(std::ostream &out, Matrix &m){
+    out << std::endl << m.num_rows() << " x "<< m.num_cols() << " matrix:" << std::endl;
+    out << "[";
+    for (unsigned int i = 0; i < m.num_rows(); i++){
+            if (i > 0) out << " ";
+            for (unsigned int j = 0; j < m.num_cols(); ++j){
+                double v;
+                m.get(i,j,v);
+                out << " " << v;
+            }
+            if (i != m.num_rows()-1) out << std::endl;
+        }
+        out << " ]"<< std::endl;
+    return out;
+}
+
+bool Matrix::add(const Matrix& b){
+    if (rows_ != b.rows_ || columns_ != b.columns_)
+        return false;
+    else {
+        for (unsigned int i = 0; i < rows_; i++){
+            for (unsigned int j = 0; j < columns_; ++j)
+                data[i][j] += b.data[i][j];
+        }
+    }
+    return true;
+}
+
+bool Matrix::subtract(const Matrix& b){
+    if (rows_ != b.rows_ || columns_ != b.columns_)
+        return false;
+    else {
+        for (unsigned int i = 0; i < rows_; i++){
+            for (unsigned int j = 0; j < columns_; ++j)
+                data[i][j] -= b.data[i][j];
+        }
+    }
+    return true;
+}
+
+void Matrix::multiply_by_coefficient(const double &coeff){
+    for (unsigned int i = 0; i < rows_; i++){
+        for (unsigned int j = 0; j < columns_; ++j)
+            data[i][j] *= coeff;
+    }
+}
+
+double* Matrix::get_row(unsigned int num_row){
+    double* ptr = NULL;
+    if (num_row >= rows_)
+        return ptr;
+    ptr = data[num_row];
+    return ptr;
+}
+
+bool Matrix::swap_row(unsigned int source, unsigned int target){
+    if (source >= rows_ || target >= rows_) return false;
+    else if (source == target) return true;
+
+    double* temp;
+    temp = data[source];
+    data[source] = data[target];
+    data[target] = temp;
+
+    delete temp;
+    return true;
+}
