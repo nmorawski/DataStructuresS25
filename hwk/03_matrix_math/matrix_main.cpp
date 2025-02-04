@@ -157,7 +157,7 @@ void SimpleTest(){  //well behaved getrow/read after
 
 	std::cout << "M11 to be quartered: " << std::endl;
 	std::cout << m11 << std::endl;
-/*
+
 	Matrix* ma1 = NULL;
 	ma1 = m11.quarter();
 	assert(ma1 != NULL);
@@ -196,12 +196,161 @@ void SimpleTest(){  //well behaved getrow/read after
 	assert(double_compare(comparison_value,12));
 
 	delete [] ma1;
-	*/
+	
 }
 
 //Write your own test cases here
 void StudentTest(){
-	//test swap_row, muliply_coeff, get_col!!!, get_row, transpose
+	//=====Tranpose Test(s)=====
+	//Testing Shape
+	Matrix test1(3,4,0);
+	Matrix test2 = test1;
+	test2.transpose();
+	assert(test1.num_rows() == test2.num_cols());
+	Matrix test3 = test2;
+	test3.transpose();
+	assert(test1 == test3);
+	std::cout << "Transposing test matrix 1, then back again" << std::endl;
+	std::cout << test1 << test2 << test3 << std::endl;
+
+	//Testing Value Positions
+	Matrix test4(3,4,0);
+	test4.set(0,0,1);
+	test4.set(0,1,2);
+	test4.set(0,2,3);
+	test4.set(0,3,4);
+
+	test4.set(1,0,5);
+	test4.set(1,1,6);
+	test4.set(1,2,7);
+	test4.set(1,3,8);
+
+	test4.set(2,0,9);
+	test4.set(2,1,10);
+	test4.set(2,2,11);
+	test4.set(2,3,12);
+
+	Matrix test5 = test4;
+	test5.transpose();
+	std::cout << "Matrix 4, and its transposition" << std::endl;
+	std::cout << test4 << test5 << std::endl;
+
+	double comparison_val1,comparison_val2;
+	assert(test4.get(0,0,comparison_val1)); //UL corner
+	assert(test5.get(0,0,comparison_val2));
+	assert(double_compare(comparison_val1,comparison_val2));
+
+	assert(test4.get(0,3,comparison_val1)); //UR corner, make sure not equal
+	assert(test5.get(0,2,comparison_val2));
+	assert(!double_compare(comparison_val1,comparison_val2));
+
+	assert(test4.get(2,0,comparison_val1)); //LL corner, make sure not equal
+	assert(test5.get(3,0,comparison_val2));
+	assert(!double_compare(comparison_val1,comparison_val2));
+
+	assert(test4.get(2,3,comparison_val1)); //LR corner
+	assert(test5.get(3,2,comparison_val2));
+	assert(double_compare(comparison_val1,comparison_val2));
+
+	//=====Multiply Coefficient Test=====
+	Matrix test6(3,3,1);
+	std::cout << "Matrix 6, before coefficent multiplication" << std::endl;
+	std::cout << test6 << std::endl;
+	test6.multiply_by_coefficient(5);
+	std::cout << "Matrix 6, after multiplying all terms by 5" << std::endl;
+	std::cout << test6 << std::endl;
+
+	//=====Clear Test=====
+	test6.clear();
+	assert(test6.num_rows() == test6.num_cols());
+	std::cout << "Matrix 6, after clearing" << std::endl;
+	std::cout << test6 << std::endl;
+
+	//=====Assignment Test=====
+	Matrix test7(2,2,1);
+	Matrix test8(3,3,2);
+	std::cout << "Matrices 7 & 8" << std::endl;
+	std::cout << test7 << test8 << std::endl;
+	test7 = test8;
+	std::cout << "Matrices 7 & 8, after Matrix 8 is assigned to 7" << std::endl;
+	std::cout << test7 << test8 << std::endl;
+
+	//=====Swap Row Test=====
+	Matrix test9(5,5,0);
+	test9.set(0,0,1);
+	test9.set(1,1,1);
+	test9.set(2,2,1);
+	test9.set(3,3,1);
+	test9.set(4,4,1);
+	std::cout << "Matrix 9, a 5x5 identity matrix" << std::endl;
+	std::cout << test9 << std::endl;
+	test9.swap_row(0,2);
+	std::cout << "Matrix 9, swapping rows 1 and 3" << std::endl;
+	std::cout << test9 << std::endl;
+	test9.swap_row(2,4);
+	std::cout << "Matrix 9, swapping rows 3 and 5" << std::endl;
+	std::cout << test9 << std::endl;
+	test9.swap_row(0,4);
+	std::cout << "Matrix 9, swapping rows 1 and 5" << std::endl;
+	std::cout << test9 << std::endl;
+
+	//=====Get Row & Column Test=====
+	double* test10 = NULL;
+	test10 = test9.get_row(2);
+	assert(test10[0] == 0 && test10[4] == 1);
+	double* test11 = NULL;
+	test11 = test9.get_col(2);
+	assert(test11[0] == 0 && test11[4] == 1);
+
+	delete [] test10;
+	delete [] test11;
+
+	//=====Quarter Test(s)=====
+	Matrix test12(3,3,1);
+	test12.set(0,1,2);
+	test12.set(0,2,3);
+
+	test12.set(1,0,4);
+	test12.set(1,1,5);
+	test12.set(1,2,6);
+
+	test12.set(2,0,7);
+	test12.set(2,1,8);
+	test12.set(2,2,9);
+	std::cout << "Matrix 12, 3x3, to be quartered: " << std::endl;
+	std::cout << test12 << std::endl;
+	test12.quarter();
+
+	Matrix* test13 = NULL;
+	test13 = test12.quarter();
+	assert(test13 != NULL);
+
+	std::cout << "UL: " << std::endl << test13[0] << std::endl;
+	std::cout << "UR: " << std::endl << test13[1] << std::endl;
+	std::cout << "LL: " << std::endl << test13[2] << std::endl;
+	std::cout << "LR: " << std::endl << test13[3] << std::endl;
+	delete [] test13;
+
+	Matrix test14(1,1,1);
+	Matrix* test15 = NULL;
+	test15 = test14.quarter();
+
+	std::cout << "Quartering of a 1x1 matrix:" << std::endl;
+	std::cout << "UL: " << std::endl << test15[0] << std::endl;
+	std::cout << "UR: " << std::endl << test15[1] << std::endl;
+	std::cout << "LL: " << std::endl << test15[2] << std::endl;
+	std::cout << "LR: " << std::endl << test15[3] << std::endl;
+	delete [] test15;
+	
+	//=====Corner Case Test=====
+	Matrix test16(3,0,1);
+	std::cout << "Matrix 16, a 3x0 matrix: " << std::endl;
+	std::cout << test16 << std::endl;
+
+	Matrix test17(0,3,1);
+	std::cout << "Matrix 17, a 0x3 matrix: " << std::endl;
+	std::cout << test17 << std::endl;
+
 }
 
 ////////////////Utility functions//////////////////////
