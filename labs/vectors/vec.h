@@ -138,4 +138,27 @@ template <class T> void Vec<T>::resize(int n, const T& fill_in_value) {
     m_size = n;
   }
 }
+//O(n^2+n)?
+template <class T> int remove_matching_elements(Vec<T> &v, const T &e) {
+  unsigned int count = 0;//tracks instances
+  for (int i = 0; i < v.size(); ++i){
+    if (v[i] == e){
+      count += 1;
+      for (int j = i; j < v.size() - 1; ++j)
+        v[j] = v[j + 1];
+      v.resize(v.size() - 1);
+      i--;
+    }
+  }
+  return count;
+}
+
+template <class T> void print(const Vec<T> &v){
+  for (int i = 0; i < v.size(); ++i){
+    cout << i << endl;
+    cout << "m_data: " << v[i] << endl;
+    cout << "m_size: " << v.size() << endl;
+    cout << endl;
+  }
+}
 #endif

@@ -91,7 +91,68 @@ int main() {
 
 
   // ADD MORE TEST CASES HERE
+  Vec<int> v4;
+  v4.push_back(11);
+  v4.push_back(22);
+  v4.push_back(33);
+  v4.push_back(11);
+  v4.push_back(44);
+  v4.push_back(11);
+  v4.push_back(55);
 
+  cout << "\nContents of vector v4:" << endl;
+  for (int j = 0; j < v4.size(); j++)
+    cout << " " << v4[j];
+  cout << endl;
+
+  remove_matching_elements(v4, 11);
+
+  cout << "Contents of vector v4:" << endl;
+  for (int j = 0; j < v4.size(); j++)
+    cout << " " << v4[j];
+  cout << endl;
+  print(v4);
+
+
+  
+  Vec<int> more_values;
+  more_values.push_back(1);
+  more_values.push_back(2);
+  more_values.push_back(2);
+  more_values.push_back(2);
+  more_values.push_back(2);
+  more_values.push_back(1);
+  cout << "Original: ";
+  for (int k = 0; k<more_values.size(); k++)
+    cout << more_values[k] << " ";
+  cout << endl;
+
+  remove_matching_elements(more_values, 2);
+
+  cout << "With the removal of 2... New:";
+  for (int l = 0; l<more_values.size(); l++)
+    cout << more_values[l] << " "; 
+  cout << endl;
+  print(more_values);
+
+
+Vec<int> v5;
+v5.push_back(4);
+v5.push_back(4);
+v5.push_back(4);
+v5.push_back(4);
+cout << "Original: ";
+for (int k = 0; k<v5.size(); k++)
+  cout << v5[k] << " ";
+cout << endl;
+
+remove_matching_elements(v5, 4);
+
+cout << "With the removal of 4... New:";
+for (int l = 0; l<v5.size(); l++)
+  cout << v5[l] << " "; 
+cout << endl;
+print(v5);
     
-  return 0; 
+return 0; 
 }
