@@ -1,7 +1,8 @@
 #include "business.h"
+#include <list>
 
 Business::Business(std::string name, std::string city, std::string zip_code, double rating, 
-    unsigned int review_count, unsigned int price, std::list<string> categories){
+    unsigned int review_count, unsigned int price, std::list<std::string> categories){
     name = name_;
     rating = rating_;
     review_count = review_count_;
@@ -13,9 +14,9 @@ Business::Business(std::string name, std::string city, std::string zip_code, dou
 }
 
 bool Business::checkCategory(const std::string category){
-    std::list<Business>::iterator itr = categories_.begin();
+    std::list<std::string>::iterator itr = categories_.begin();
     while(itr != categories_.end()){
-		if (*itr2 == category) return true;
+		if ((*itr) == category) return true;
 		itr++;
 	}
     return false;
@@ -38,11 +39,12 @@ std::ostream& operator<<(std::ostream &out, Business &b){
     if (price_info.size() > 0) out << " " << price_info;
     out << std::endl;
 
-    std::list<Business>::iterator itr = b.getCategories().begin();
+    std::list<std::string> temp = b.getCategories();
+    std::list<std::string>::iterator itr = temp.begin();
     ++itr;
-    out << *itr;
-    while(itr != b.getCategories().end()){
-		out << ", " << *itr;
+    out << (*itr);
+    while(itr != temp.end()){
+		out << ", " << (*itr);
 		itr++;
 	}
     out << std::endl;
@@ -60,4 +62,8 @@ Plymouth Meeting
 Arts & Entertainment, Cinema
 =====================
 */
+// Test logic later, make sure identical ratings maintain same placement in array
+bool compareByRating(const Business& b1, const Business& b2) {
+    return b1.getRating() > b2.getRating();
+}
 
