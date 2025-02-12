@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <cstdint>
 
 class GifFrame {
 public:
@@ -66,6 +67,12 @@ std::vector<uint8_t> extractGifHeader(const std::vector<uint8_t>& fileData) {
 
 // check point 1: complete this function, so as to reverse vector without using iterators.
 void reverseFrames(std::vector<GifFrame>& frames) {
+	int half = frames.size()/2;
+	for (int i = 0; i < half; i++){
+		GifFrame temp = frames[i];
+		frames[i] = frames[frames.size()-1-i];
+		frames[frames.size()-1-i] = temp;
+	}
 }
 
 void writeGif(const std::string& outputFilename, const std::vector<uint8_t>& originalFileData,
@@ -270,10 +277,11 @@ std::vector<GifFrame> extractFrames(const std::string& filename, std::vector<uin
 	return frames;
 }
 
-int main() {
+int main(int argc, char* argv[]){
+	std::string file_name = argv[1];
 	// read the complete file into fileData, and extract frames.
 	std::vector<uint8_t> fileData;
-	std::vector<GifFrame> frames = extractFrames("input.gif", fileData, loopExtension);
+	std::vector<GifFrame> frames = extractFrames(file_name, fileData, loopExtension);
 	if (frames.empty()) return 1;
 
 	// extract the complete header from fileData
