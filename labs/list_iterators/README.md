@@ -1,21 +1,84 @@
-# Lab 6 — Reversing Data 8 Ways: STL Vectors vs. STL Lists vs. Homemade Linked Lists
+# Lab 4 — Reversing Data in Different Ways: STL Vectors vs. STL Lists
 
-## Checkpoint 1A: Reverse with STL Vector Swaps
+## Background - Introduction to GIF Formats and the Concept of Frames
+
+## What is a GIF?
+
+A **GIF** (Graphics Interchange Format) is a popular bitmap image format commonly used for its ability to support animations. It was introduced in 1987 by CompuServe and has since become widely used on the internet. GIFs support **256 colors** and are often used for simple graphics, icons, or short animations that loop seamlessly. The GIF format is best known for its lightweight nature and ability to be easily shared on social media platforms and websites.
+
+## GIF Frames and Animation
+
+A GIF image fileis composed of a sequence of **frames**. Each frame is a static image that, when displayed in sequence, creates the illusion of movement. The concept of frames in a GIF is similar to how traditional film or digital video works, where individual frames are shown at a rapid pace to simulate continuous motion.
+
+### Key Concepts:
+
+- **Frames**: Each individual image in a GIF sequence. Each frame may display a single static image or a portion of the animation.
+- **Frame Duration**: Each frame in a GIF has a duration (in milliseconds), determining how long it is displayed before transitioning to the next frame. The timing of each frame is crucial in defining the speed of the animation.
+- **Looping**: GIFs can be set to loop indefinitely or stop after a certain number of loops. This makes GIFs ideal for short animations that need to play continuously.
+
+## Lab Tasks
+
+In this lab, you will modify an existing C++ program. This program reverse a GIF image file.
+
+Here are examples of reversing GIF.
+
+Example 1:
+
+This is the [original GIF](dog_good.gif). And this is the [reversed GIF](dog_bad.gif)
+
+Example 2:
+
+This is the [original GIF](door_break.gif). And this is the [reversed GIF](door_restore.gif)
+
+Example 3:
+
+This is the [original GIF](jump_real.gif). And this is the [reversed GIF](jump_fake.gif)
+
+Example 4:
+
+This is the [original GIF](brick_real.gif). And this is the [reversed GIF](brick_fake.gif)
+
+## Starter Code
+
+The starter code [main.cpp](main.cpp) defines a class named GifFrame to represents GIF frames. Each object of this class represents one frame.
+
+```cpp
+class GifFrame {
+public:
+        std::vector<uint8_t> data;  // raw image data
+        int width, height;               // frame dimensions
+        int left, top;                    // position within the GIF
+        uint8_t disposalMethod = 0;       // add this field (0 = undefined, 1 = keep, etc.)
+        bool hasTransparency = false;      // flag for transparency
+        uint8_t transparentColorIndex = 0; // index of the transparent color in the global color table
+        uint16_t delayTime = 0;            // delay time before the next frame in hundredths of a second
+        // default constructor
+        GifFrame() : width(0), height(0), left(0), top(0), disposalMethod(0),
+                 hasTransparency(false), transparentColorIndex(0), delayTime(0) {}
+        // constructor to initialize the frame data
+        GifFrame(const std::vector<uint8_t>& frameData) : data(frameData), disposalMethod(0),
+                                                     hasTransparency(false), transparentColorIndex(0), delayTime(0) {}
+};
+```
+
+When given an input GIF image file, the starter code extracts all frames from this image file, and store these frames in a std::vector<GifFrame> named frames. This frames vector will then be passed to a function *reverseFrames* which reverses the vector. The *reverseFrames* function will return an std::vector<GifFrame> which contains the reversed frames. This reversed frames vector is then passed to a function writeGif(), which just writes all frames in a new GIF image file.
+
+In this lab, multiple copies of the starter code will be provided, but you will only be working on the *reverseFrames* function - you will be required to re-write this function in different ways.
+
+## Checkpoint 1: Reverse with STL Vector Swaps
 *estimate: TBD*
 
-Read the starter code [checkpoint1.cpp](checkpoint1.cpp) and complete the function *reverse* that reverses the contents of an STL vector of integers. For example, if the contents of the vector are in increasing order before the call to reverse_vector, then they will be in decreasing order afterwards. For this checkpoint, use indexing/subscripting/[] on the vector, not iterators (or pointers). You may not use a second vector or array or list.
-The trick is to step through the vector one location at a time, swapping values between the first half of the
+Complete the *reverseFrames* function in [main_cp1.cpp](main_cp1.cpp). For this checkpoint, use indexing/subscripting/[] on the vector, not iterators (or pointers). You may not use a second vector or array or list. The trick is to step through the vector one location at a time, swapping values between the first half of the
 vector and the second half. As examples, the value at location 0 and the value at location size()-1 must
 be swapped, and the value at location 1 and the value at location size()-2 must be swapped.
-Make sure your code works with even and odd length vectors. Also add a few more tests to the main function
-to make sure your code will work for the special cases of an empty vector and vectors of size 1 and 2.
+Make sure your code works with even and odd length vectors. 
 
-## Checkpoint 1B: Reverse with STL List Swaps
+**To complete this checkpoint**, show a TA your debugged functions to reverse STL vectors by element swapping.
+
+## Checkpoint 2: Reverse with STL List Swaps
 *estimate: TBD*
 
-Copy your code from Checkpoint 1A to a new file. Then, convert this code to use STL Lists instead of STL
-vectors. Start by replacing ’vector’ with ’list’ everywhere. And you’ll need to replace your subscripting
-with iterators.
+Complete the *reverseFrames* function in [main_cp2.cpp](main_cp2.cpp). For this checkpoint, now the *reverseFrames* function takes an std::list as its parameter, and your task is to reverse this list.
 
 You may want to use a straightforward concept we did not discuss in lecture: a reverse iterator. A reverse
 iterator is designed to step through a list from the back to the front. An example will make the main
@@ -48,16 +111,14 @@ Note, you’ll probably need to add the keyword typename in front of your templa
 typename std::list<T>::iterator itr = data.begin();
 ```
 
-**To complete this checkpoint**, show a TA your debugged functions to reverse STL vectors and STL lists
-by element swapping. Be sure to ask your TA/mentors any questions you have about regular vs. reverse
-iterators for lists and vectors.
+**To complete this checkpoint**, show a TA your debugged functions to reverse STL lists by element swapping.
 
-## Checkpoint 2: Reverse with STL List Using Insert/Erase/Push/Pop
+## Checkpoint 3: Reverse with STL List Using Insert/Erase/Push/Pop
 *estimate: TBD*
 
 Form a team of 4. You may form a team of 2 or 3 only with approval from your graduate lab TA.
 
-Each student should make a copy of their solution file for Checkpoint 1B. And then, each student should
+Each student should make a copy of their solution file for Checkpoint 2. And then, each student should
 rewrite their STL list reverse function:
   - **STUDENT 1** Using only front(), pop_front(), and insert().  
   - **STUDENT 2** Using only back(), pop_back(), insert(), and iterator increment.  
@@ -67,14 +128,12 @@ Each of these solutions is allowed to use a for or while loop and a temporary va
 element, but should not use any auxiliary data structures (no array, no vector, no additional list, etc.)
 
 Note that these solutions are quite different than the algorithms that reverse a vector or list by swapping
-values. If the algorithm is paused and printed midway, the vector contents will be different than the algorithms
-for Checkpoint 1. (Go ahead, add more calls to the print function in the middle of your reverse function.) Test
-and debug your own code before helping your teammates. Discuss the similarities and differences between
+values. Test and debug your own code before helping your teammates. Discuss the similarities and differences between
 the solutions to each version of the reverse function.
 
 **To complete this checkpoint**, as a team, present your debugged solutions to a TA or mentor.
 
-## Checkpoint 3: Reversing a Homemade Linked List
+<!-- ## Checkpoint 3: Reversing a Homemade Linked List
 *estimate: TBD*
 
 This checkpoint is an individual checkpoint. (But you can ask your teammates questions if you get stuck.)
@@ -98,4 +157,4 @@ and one version should be recursive.
 **Note**: this reverse function takes a pointer as its argument, but we are passing this pointer by reference, because we want to modify this pointer. To understand the concept of passing a pointer by reference, you are recommended to read and run this [example program](reference_to_a_pointer.cpp).
 
 **To complete this checkpoint**, show a TA or mentor your diagram and your debugged function(s) to
-reverse a homemade singly-linked list.
+reverse a homemade singly-linked list.-->
