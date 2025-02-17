@@ -67,7 +67,7 @@ Your program will support these commands:
 5. block someone.
 <!--6. delete account.-->
 
-More details about each of these four commands are given below. For all four commands, *users.txt* represents the input file, and *output.txt* represents the output file, please do not hardcode the file names into your program, as the actual input/output file may have a different name. You should just use the *argv[]* array to retrieve the name of the input and the output file. Also note that all the expected output files contain an empty line at the end of file, to match with that, you just need to make sure to use *std::endl;* (or just *endl;* if you don't use *std::*) when printing the last line of a file.
+More details about each of these five commands are given below. For all five commands, *users.txt* represents the input file, and *output.txt* represents the output file, please do not hardcode the file names into your program, as the actual input/output file may have a different name. You should just use the *argv[]* array to retrieve the name of the input and the output file. Also note that all the expected output files contain an empty line at the end of file, to match with that, you just need to make sure to use *std::endl;* (or just *endl;* if you don't use *std::*) when printing the last line of a file.
 
 **Note**: for all the commands, you can assume the phone numbers (used in the commands) are valid and are corresponding to an existing account.
 
@@ -277,11 +277,11 @@ public:
 **Note**: for this homework, it is okay to define member variables as public variables, and this is due to the unique nature of linked lists.
 
 Use good coding style when you design and implement your program. Organize your program into functions:
-don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
+don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
 to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
-You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
+You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
 
-**Due Date**: 02/22/2024, Thursday, 10pm.
+**Due Date**: 02/20/2025, Thursday, 10pm.
 
 ## Rubric
 
@@ -297,7 +297,6 @@ You must do this assignment on your own, as described in the [Collaboration Poli
    - Functions are not well documented or are poorly commented, in either the .h or the .cpp file. (-1)
    - Improper uses or omissions of const and reference. (-1)
    - At least one function is excessively long (i.e., more than 200 lines). (-1)
-   - Overly cramped. (-1)
    - Poor file organization: Puts more than one class in a file (okay for very small helper classes) (-1)
    - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc. (-2)
  - DATA REPRESENTATION (Must create and use homemade linked lists for the implementation.) (6 pts)
