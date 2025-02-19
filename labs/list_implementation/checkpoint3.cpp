@@ -15,6 +15,53 @@ public:
 // this function returns a pointer pointing to the head node of the merged list.
 template <class T>
 Node<T>* mergeLists(Node<T>* head_A, Node<T>* head_B) {
+    if (!head_A) return head_B;
+    if (!head_B) return head_A;
+
+    Node<T>* head = nullptr;
+    Node<T>* tail = nullptr;
+
+    while (head_A && head_B) {
+        Node<T>* nextNode = nullptr;
+        if (head_A->value <= head_B->value) {
+            nextNode = head_A;
+            head_A = head_A->next;
+        } else {
+            nextNode = head_B;
+            head_B = head_B->next;
+        }
+
+        if (!head) {
+            head = tail = nextNode;
+        } else {
+            tail->next = nextNode;
+            nextNode->prev = tail;
+            tail = nextNode;
+        }
+    }
+
+    if (head_A){
+		tail->next = head_A;
+		head_A->prev = tail;
+		tail = head_A;
+	} else {
+		tail->next = head_B;
+		head_B->prev = tail;
+		tail = head_B;
+	}
+
+    return head;
+}
+
+template <class T>
+void DeleteList(Node<T>* &head) {
+    Node<T>* current = head;
+    while (current) {
+        Node<T>* next = current->next;
+        delete current;
+        current = next;
+    }
+    head = nullptr;
 }
 
 int main() {
@@ -89,6 +136,9 @@ int main() {
 		current = current->prev;
 	}
 	std::cout << std::endl;
+
+	// clean up memory
+    DeleteList(head_C);
 
 	return 0;
 }

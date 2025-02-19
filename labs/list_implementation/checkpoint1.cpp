@@ -28,12 +28,12 @@ int main() {
   // clear out the list
   a.clear();
 
-  /*
+
   assert (a.size() == 0);
-  */
+
   
 
-  /*
+
   // simple tests of push_front, pop_front, and pop_back
   a.push_front(5);
   a.push_back(7);
@@ -66,7 +66,7 @@ int main() {
   a.pop_front();
   assert (a.size() == 0);
   assert (a.begin() == a.end());
-  */
+
 
   return 0;
 }

@@ -21,6 +21,30 @@ public:
 	NodeB* prev;
 };
 
+template <class T>
+void PushBack(T* &head, T* &node) {
+    if (!head) {
+        head = node;
+    } else {
+        T* temp = head;
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = node;
+        node->prev = temp;
+    }
+}
+
+template <class T>
+void PrintList(T* &head) {
+    T* temp = head;
+    while (temp) {
+        std::cout << temp->data << " -> ";
+        temp = temp->next;
+    }
+    std::cout << "nullptr" << std::endl;
+}
+
 int main() {
 	// Part 1: test NodeA class.
 	// Initialize an empty linked list, consisting of NodeA nodes.

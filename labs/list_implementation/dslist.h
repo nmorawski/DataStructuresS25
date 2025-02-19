@@ -131,8 +131,16 @@ dslist<T>& dslist<T>::operator= (const dslist<T>& old) {
 
 template <class T>
 void dslist<T>::push_front(const T& v) {
-
-
+  Node<T>* newp = new Node<T>(v);
+  if (!head_) {
+    head_ = tail_ = newp;
+  } else {
+    // normal case: at least one node already
+    head_->prev_ = newp;
+    newp->next_ = head_;
+    head_ = newp;
+  }
+  ++size_;
 
 
 
@@ -140,10 +148,16 @@ void dslist<T>::push_front(const T& v) {
 
 template <class T>
 void dslist<T>::pop_front() {
+  if (!head_){
 
-
-
-
+  } else {
+    Node<T>* pop = head_;
+    head_ = head_->next_;
+    if (size_ > 1) head_->prev_ = NULL;
+    else tail_ = NULL;
+    delete pop;
+    --size_;
+  }
 }
 
 template <class T>
@@ -163,11 +177,16 @@ void dslist<T>::push_back(const T& v) {
 
 template <class T>
 void dslist<T>::pop_back() {
+  if (!tail_){
 
-
-
-
-
+  } else {
+    Node<T>* pop = tail_;
+    tail_ = tail_->prev_;
+    if (size_ > 1) tail_->next_ = NULL;
+    else head_ = NULL;
+    delete pop;
+    --size_;
+  }
 }
 
 // do these lists look the same (length & contents)?
@@ -256,13 +275,13 @@ void dslist<T>::copy_list(const dslist<T>& old) {
 
 template <class T>
 void dslist<T>::destroy_list() {
-
-
-
-
-
-
-
+  while (head_ != NULL){
+    Node<T>* delete_node = head_;
+    head_ = head_->next_;
+    delete delete_node;
+  }
+  tail_ = NULL;
+  size_ = 0;
 }
 
 #endif
