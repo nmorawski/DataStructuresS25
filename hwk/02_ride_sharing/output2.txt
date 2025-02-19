@@ -51,7 +51,7 @@ Emily David Female 38 792-130-1111 3.1 One_World_Trade_Center 40.7127 -74.0134 G
 Isabella Richard Female 24 823-437-9773 3.7 Cunningham_Park 40.7341 -73.775 East_New_York 40.6699 -73.8806 Standard Driver_on_the_way Sharon James 540-465-6200
 Jessica Zhao Female 37 734-581-8494 4.9 Broadway_Theater_District 40.7589 -73.9851 Boerum_Hill 40.6836 -73.9847 Standard Driver_on_the_way Javier Daniel 560-718-5501
 Joseph Thomas Male 34 910-611-8333 4.4 One_World_Trade_Center 40.7127 -74.0134 The_Unisphere 40.747 -73.8466 Standard Ready_to_request null null null
-Brenda Charles Female 45 500-861-4262 3.4 Carroll_Gardens 40.6782 -73.9944 The_High_Line 40.748 -74.0048 Premium Driver_on_the_way Nancy Huang 625-408-6673
+Brenda Charles Female 45 500-861-4262 3.4 Carroll_Gardens 40.6782 -73.9944 The_High_Line 40.748 -74.0048 Premium Driver_on_the_way Carlos Hu 760-912-4326
 Luis Kim Male 32 329-726-2754 4.7 Columbia_Street_Waterfront_District 40.6794 -74.0002 Ridgewood 40.7101 -73.9178 Economy Driver_on_the_way Angela Choi 978-971-2149
 Andres Robert Male 20 206-520-6567 4.5 Brooklyn_Botanic_Garden 40.6689 -73.9631 Brooklyn_Botanic_Garden 40.6689 -73.9631 Standard Driver_on_the_way Edward Javier 729-834-3773
 Lucia Edward Female 47 234-837-5951 4.7 Brooklyn_Bridge 40.7061 -73.9969 Gravesend 40.5923 -73.9799 Economy During_the_trip Ronald Mark 405-928-6420

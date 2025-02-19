@@ -1,21 +1,20 @@
-/*template <class T> class Node {
-public:
-	Node() : next_(NULL), prev_(NULL) {}
-	Node(const T& v) : value_(v), next_(NULL), prev_(NULL) {}
-	T value_;
-	Node<T>* next_;
-	Node<T>* prev_;
-};*/
+#ifndef USER_H
+#define USER_H
+
 #include <string>
 #include <vector>
+#include <iostream> 
+#include <fstream>
+#include <algorithm>
 #include "location.h"
+
 class User {
 public:
-	User();
-    User(std::string name, int age, std::string gender, std::string phone_number, 
-        std::string profession, std::string school, Location location, bool isPremium,
-        int minAge_pref, int maxAge_pref, int max_dist, std::string gender_pref,
-        std::vector<std::string> likes);
+    User(const std::string &name, int age, const std::string &gender, const std::string &phone, 
+        const std::string &profession, const std::string &school, const Location &loc, 
+        bool premium, int minAge, int maxAge, int maxDist, const std::string &genderPref, 
+        const std::vector<std::string> &likes);
+
 	User* next_;
 
 	std::string name_;
@@ -28,7 +27,18 @@ public:
 	bool isPremium_;
 	int minAge_pref_;
 	int maxAge_pref_;
-	int max_dist_;
+	int maxDist_;
 	std::string gender_pref_;
 	std::vector<std::string> likes_;
+	std::vector<std::string> blocked_;
+
+    bool matchesPreferences(const User &other) const;
+    bool hasLiked(const std::string &phone_number) const;
+	bool isBlocked(const std::string &phone_number) const;
+    
+	void blockUser(const std::string &phone_number) { blocked_.push_back(phone_number);}
 };
+
+std::ostream& operator<<(std::ostream &out, User &u);
+
+#endif
