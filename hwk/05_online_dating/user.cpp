@@ -3,7 +3,7 @@
 User::User(const std::string &name, int age, const std::string &gender, const std::string &phone, 
     const std::string &profession, const std::string &school, const Location &loc, bool premium, 
     int minAge, int maxAge, int maxDist, const std::string &genderPref, 
-    const std::vector<std::string> &likes){
+    const std::vector<std::string> &likes){ // Constructor
     
     name_ = name;
 	age_ = age;
@@ -21,6 +21,7 @@ User::User(const std::string &name, int age, const std::string &gender, const st
     next_ = nullptr;
 }
 
+// Checks if a given user is a fit for the desired user's preferences
 bool User::matchesPreferences(const User &other) const {
     // Check age preferences
     if (other.age_ < minAge_pref_ || other.age_ > maxAge_pref_) return false;
@@ -35,10 +36,12 @@ bool User::matchesPreferences(const User &other) const {
     return true;
 }
 
+// Checks if a given user was liked (swiped right on) by the desired user
 bool User::hasLiked(const std::string &phone_number) const {
     return std::find(likes_.begin(), likes_.end(), phone_number) != likes_.end();
 }
 
+// Checks if a given user was blocked by the desired user
 bool User::isBlocked(const std::string &phone_number) const {
     return std::find(blocked_.begin(), blocked_.end(), phone_number) != blocked_.end();
 }
@@ -46,18 +49,14 @@ bool User::isBlocked(const std::string &phone_number) const {
 std::ostream& operator<<(std::ostream &out, User &u){
     out << u.name_ << " " << u.age_;
 
-    if (u.profession_ != "Undisclosed"){
+    if (u.profession_ != "Undisclosed"){ // If undisclosed, don't print
         std::replace(u.profession_.begin(), u.profession_.end(), '_', ' ');
         out << std::endl << u.profession_;
     }
-    if (u.school_ != "Undisclosed"){
+    if (u.school_ != "Undisclosed"){ // If undisclosed, don't print
         std::replace(u.school_.begin(), u.school_.end(), '_', ' ');
         out << std::endl << u.school_;
     }
 
     return out;
 }
-
-// void User::removeLike(const std::string& phone_number) {
-//     likes.erase(std::remove(likes.begin(), likes.end(), phone_number), likes.end());
-// }

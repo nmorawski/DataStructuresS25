@@ -1,3 +1,7 @@
+
+// I took this code directly from my Homework 2: Ride Sharing; I really liked how I styled/made the
+// Location class, so I added the same code here, with some minor changes to fit the given problem.
+
 #define _USE_MATH_DEFINES //Needed for cmath's M_PI
 
 #include <iostream>
