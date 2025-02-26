@@ -91,7 +91,7 @@ void print_grid(const vector<vector<GRID_STATUS> > & blocked_grid, unsigned int 
   if (count > 0) path_i = validPath[0].size() - 1;
   for (unsigned int y=0; y<blocked_grid[0].size(); ++y) {
     for (unsigned int x=0; x<blocked_grid.size(); ++x) {
-      if (count > 0 && x == validPath[0][path_i].x && y == validPath[0][path_i].y) {
+      if (count > 0 && x == validPath[0][path_i].x && y == validPath[0][path_i].y){
         std::cout << " $";
         if (path_i > 0) path_i--;
       } else if (x == start_x && y == start_y)
@@ -103,17 +103,18 @@ void print_grid(const vector<vector<GRID_STATUS> > & blocked_grid, unsigned int 
     }
     std::cout << '\n';
   }
-
-  std::cout << "First saved path: " << std::endl;
-  for (unsigned int j = 0; j < validPath[0].size(); j++) {
-      std::cout << "(" << validPath[0][j].x << ", " << validPath[0][j].y << ") ";
+  if (count > 0){
+    std::cout << "First saved path: " << std::endl;
+    for (unsigned int j = 0; j < validPath[0].size(); j++) {
+        std::cout << "(" << validPath[0][j].x << ", " << validPath[0][j].y << ") ";
+    }
+    std::cout << std::endl;
   }
-  std::cout << std::endl;
 
 }
 
 
-int numberPaths(unsigned int x, unsigned int y, const vector<vector<GRID_STATUS> >& blocked, vector<vector<Point>> &validPath, vector<Point> path = vector<Point>()) {
+int numberPaths(unsigned int x, unsigned int y, const vector<vector<GRID_STATUS> >& blocked, vector<vector<Point>> &validPath, vector<Point> &path) {
     if (x == 0 && y == 0) {
         path.push_back(Point(x, y));
         if (validPath.size() == 0) validPath.push_back(path);
