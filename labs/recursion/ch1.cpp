@@ -1,5 +1,4 @@
 #include <iostream>
-using namespace std;
  
 int countPaths(int x, int y){
     if (x == 0 || y == 0)
@@ -8,9 +7,11 @@ int countPaths(int x, int y){
 }
 
 int main(int argc, char *argv[]){
-    int x = atoi(argv[argc-2]);
-    int y = atoi(argv[argc-1]);
-    cout << "Point: ("<<x<<","<<y<<")"<<endl;
-    cout << "Number of Paths: " << countPaths(x, y)<<endl;
+    int x = std::atoi(argv[argc-2]);
+    int y = std::atoi(argv[argc-1]);
+
+    std::cout << "Point: ("<<x<<","<<y<<")"<< std::endl;
+    std::cout << "Number of Paths: " << countPaths(x, y)<< std::endl;
+    
     return 0;
 }
