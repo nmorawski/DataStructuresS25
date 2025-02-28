@@ -18,13 +18,6 @@ own, as described in "Academic Integrity for Homework" handout.
 ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  < insert # hours >
 
 
-ALGORITHM ANALYSIS:
-What's the order notation of your algorithm?
-
-
-
-
-
 MISC. COMMENTS TO GRADER:  
 Optional, please be concise!
 
