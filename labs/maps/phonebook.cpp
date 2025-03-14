@@ -7,9 +7,13 @@
 using namespace std;
 
 // add a number, name pair to the phonebook
-/*void add(vector<string> &phonebook, int number, string const& name) {
+#define VECTOR_
+
+#ifdef VECTOR
+void add(vector<string> &phonebook, int number, string const& name) {
   phonebook[number] = name;
-}*/
+}
+#endif
 void add(map<int, string> &phonebook, int number, string const& name) {//O(logn)
   phonebook[number] = name;
 }
@@ -21,11 +25,12 @@ void add(map<int, string> &phonebook, int number, string const& name) {//O(logn)
   else 
     cout << phonebook[number] << " is calling!" << endl;
 }*/
-void identify(map<int,string> &phonebook, int number) {//O(logn)
-  if (phonebook.find(number) == phonebook.end()) 
+void identify(const map<int,string> &phonebook, int number) {//O(logn)
+  map<int,string>::const_iterator itr = phonebook.find(number);
+  if (itr == phonebook.end()) 
     cout << "unknown caller!" << endl;
   else 
-    cout << phonebook[number] << " is calling!" << endl;
+    cout << itr->second << " is calling!" << endl;
 }
 
 int main() {
@@ -40,5 +45,6 @@ int main() {
 
   // test the phonebook
   identify(phonebook, 2222);
+  identify(phonebook, 4444);
   identify(phonebook, 4444);
 }
