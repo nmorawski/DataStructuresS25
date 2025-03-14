@@ -27,33 +27,31 @@ Puzzle parse_input(std::ifstream &file_input, std::vector<std::string> &included
     return puzzle;
 }
 
-bool find(const Puzzle& puzzle, const std::string &word, unsigned int row, unsigned int column, unsigned int indx, int y_direct, int x_direct) {
-    std::cout << indx <<std::endl;
-    std::cout << row << " "<< column<<std::endl;
-    std::cout << puzzle[row][column] << " "<< word[indx]<<std::endl;
+bool find(const Puzzle& puzzle, const std::string &word, int row, int column, unsigned int indx, int y_direct, int x_direct) {
     if (puzzle[row][column]==word[indx] && indx==word.size()-1){
-        std::cout << "WORKED"<<std::endl;
+        //std::cout << "WORKED"<<std::endl;
         return true;
     }
 
     if (puzzle[row][column]==word[indx]){
         if ((row + y_direct) >= 0 && (column + x_direct) >= 0 && (row + y_direct) < puzzle.size() && (column + x_direct) < puzzle[0].size()) {
-            std::cout << "characterchecked: "<< word[indx] <<std::endl;
+            //std::cout << "characterchecked: "<< word[indx] <<std::endl;
             return find(puzzle, word, (row + y_direct), (column + x_direct), (indx+1), y_direct, x_direct);
         }
     }
     return false;
 }
 
-bool find(const Puzzle& puzzle, const std::string &word, unsigned int row, unsigned int column) {
+bool find(const Puzzle& puzzle, const std::string &word, int row, int column) {
     if (puzzle[row][column]==word[0]) {
+        if (word.size()==1) return true;
         std::vector<std::pair<int,int>> directions = {{-1,0},{-1,1},{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}}; //12 0'clock, clockwise
         for (unsigned int i = 0; i < directions.size(); i++) {
             if (find(puzzle, word, row, column, 0, directions[i].first, directions[i].second)) return true;
         }
     }
     if (row == puzzle.size()-1 && column == puzzle[0].size()-1) {
-        std::cout << "END"<<std::endl;
+        //std::cout << "END"<<std::endl;
         return false; // End of puzzle, not found
     }
     if (row == puzzle.size()-1) return find(puzzle, word, row, (column+1)); // Last row
@@ -64,6 +62,7 @@ bool find(const Puzzle& puzzle, const std::string &word, unsigned int row, unsig
 bool find_forbidden_words(const Puzzle& puzzle, const std::vector<std::string> &forbidden) {
     for (unsigned int i = 0; i < forbidden.size(); i++) {
 		if (find(puzzle, forbidden[i], 0, 0)) return true;
+        //std::cout << forbidden[i] << std::endl;
 	}
 	return false;
 }
@@ -77,7 +76,7 @@ bool is_full(const Puzzle& puzzle) {
 	return true;
 }
 
-bool add_word(Puzzle& puzzle, const std::string &word, unsigned int row, unsigned int column, unsigned int indx, int x_direct, int y_direct) {
+bool add_word(Puzzle& puzzle, const std::string &word, int row, int column, unsigned int indx, int x_direct, int y_direct) {
     if (indx==word.size()) {
         return true;
     }
@@ -91,13 +90,12 @@ bool add_word(Puzzle& puzzle, const std::string &word, unsigned int row, unsigne
     return false;
 }
 
-void add_word(Puzzle &puzzle, std::vector<Puzzle> &possible_puzzles, const std::string &word, unsigned int row, unsigned int column) {
-    for (unsigned int y = 0; y < 3; y++) {
-        for (unsigned int x = 0; x < 3; x++) {
-            Puzzle word_added = puzzle;
-            if (add_word(word_added, word, row, column, 0, (x-1), (y-1))){
-                possible_puzzles.push_back(word_added);
-            }
+void add_word(Puzzle &puzzle, std::vector<Puzzle> &possible_puzzles, const std::string &word, int row, int column) {
+    std::vector<std::pair<int,int>> directions = {{-1,0},{-1,1},{0,1}, {1,1}, {1,0}, {1,-1}, {0,-1}, {-1,-1}}; //12 0'clock, clockwise
+    for (unsigned int i = 0; i < directions.size(); i++) {
+        Puzzle word_added = puzzle;
+        if (add_word(word_added, word, row, column, 0, directions[i].first, directions[i].second)){
+            possible_puzzles.push_back(word_added);
         }
     }
     return;
@@ -108,8 +106,13 @@ void fill_spaces(Puzzle &default_puzzle, std::vector<Puzzle> &puzzles, const std
 
     if (is_full(default_puzzle)) {
         if (!(find_forbidden_words(default_puzzle, forbidden))){
-            std::vector<Puzzle>::iterator it = find(puzzles.begin(), puzzles.end(), default_puzzle);
-            if (it == puzzles.end()) puzzles.push_back(default_puzzle);
+            if (command == "all_solutions") {
+                std::vector<Puzzle>::iterator it = find(puzzles.begin(), puzzles.end(), default_puzzle);
+                if (it == puzzles.end()) puzzles.push_back(default_puzzle);
+            } else {
+                if (puzzles.size() == 0) puzzles.push_back(default_puzzle);
+                else return;
+            }
         }
 
         return ;
@@ -132,30 +135,33 @@ void generate_puzzles(Puzzle &default_puzzle, std::vector<Puzzle> &puzzles, cons
     const std::vector<std::string> &forbidden, int indx, const std::string &command) {
     
     if (indx == included.size()) {
+        std::cout <<"HHHEEEEEEEEEEEEEELLLLLLLLLLLPPPPPPPPP"<<std::endl;
         if (find_forbidden_words(default_puzzle, forbidden)) {
             std::cout << "gotcha";
             return;
         } else if (is_full(default_puzzle)) {
-            if (command == "all_solutions") puzzles.push_back(default_puzzle);
-            else if (command == "one_solution") {
+            if (command == "all_solutions") {
+                std::vector<Puzzle>::iterator it = find(puzzles.begin(), puzzles.end(), default_puzzle);
+                if (it == puzzles.end()) puzzles.push_back(default_puzzle);
+            } else if (command == "one_solution") {
                 if (puzzles.size() == 0) puzzles.push_back(default_puzzle);
+                else return;
             }
             return;
         } else {
             fill_spaces(default_puzzle, puzzles, forbidden, command);
-            //puzzles.push_back(default_puzzle);
             return;
         }
     }
-    for (unsigned int i = 0; i < default_puzzle.size(); i++) {
-        for (unsigned int j = 0; j < default_puzzle[0].size(); j++){
+    for (int i = 0; i < default_puzzle.size(); i++) {
+        for (int j = 0; j < default_puzzle[0].size(); j++){
             if (default_puzzle[i][j]=='.' || default_puzzle[i][j]==included[indx][0]) {//Possible start
                 Puzzle new_puzzle = default_puzzle;
                 std::vector<Puzzle> possible_puzzles; 
-                add_word(default_puzzle, possible_puzzles, included[indx], i,j);
+                add_word(new_puzzle, possible_puzzles, included[indx], i,j);
                 //std::cout << possible_puzzles.size() << std::endl;
                 for (unsigned int k = 0; k < possible_puzzles.size(); k++) {
-                    generate_puzzles(possible_puzzles[k], puzzles, included, forbidden, indx+1, command);
+                    generate_puzzles(possible_puzzles[k], puzzles, included, forbidden, (indx+1), command);
                 }
             }
         }
