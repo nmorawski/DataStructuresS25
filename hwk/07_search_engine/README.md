@@ -1,25 +1,3 @@
-<!-- Clarification
-
-We made a clarification on the discussion forum. In case you didn't pay attenton there, we are adding the clarification here.
-
-2. However, these are two situations where the above rule does not apply:
-
-2.1. when constructing the snippet, this above rule does not apply. When constructing the snippet, you just find the first occurrence of that word (or that query), and that really is saying that you can just call the **std::string::find**() function to find the first occurrence of that word (or that query) within the body section of the HTML file. And therefore your snippet may be like this:
-
-"I am Lady Gaga."
-
-when the search is a phrase search of "Lady Gaga". So this means that "." after Gaga is okay, we do not care.
-
-This is also why for test case 4.2, the following is showed in the snippet:
-
-"Since 1982, The Statue of Liberty-Ellis Island Foundation has partnered with the"
-
-when the search query is a phrase search of "Statue of Liberty". And this means that "-" after Liberty is okay, we do not care.
-
-2.2. when counting the number of occurrences of each keyword (in the keyword density score calculation process), the above rule does not apply. When counting the occurrences of each keyword, you can just call the **std::string::find**() function to find the occurrence of that keyword. And therefore, when the keyword is *Gaga*, and the **std::string::find**() function finds *Gaga* in the sentence of "I am Lady Gaga.", that is okay, we will count this one as a valid occurrence even though there is period "." after *Gaga*.
-
-So you may see that 1 and 2 are not consistent; but the only reason we allow this inconsistence to exist in this assignment is to simplify your task. A fully functioning search engine will need to handle a lot of complicated cases, and that's way beyond the scope of this course.-->
-
 # Homework 7 — Design and Implementation of a Simple Google
 
 In this assignment you will develop a simple search engine called New York Search. Your program will mimic some of the features provided by Google. Please read the entire handout before starting to code the assignment.
@@ -42,12 +20,6 @@ When developing a search engine, the first question we want to ask is, where to 
 | orange    | Document1, Document2                   |
 
 **Note**: in this README, the term web page, page, document, and HTML file, all have the same meaning.
-
-<!--Term Frequency
-
-Metadata and Links:
-
-The index may also store metadata associated with each web page, such as the page's URL, title, and description. Additionally, the index can include information about links from one page to another, which is used for link analysis and page ranking.-->
 
 When a user enters a search query, the search engine consults its inverted index map to identify the documents that match the query term. These matching documents will then be ranked based on various factors, and the ranked documents will then be presented to the user. And this ranking process is the so-called Page Ranking.
 
@@ -391,11 +363,11 @@ Make sure you still include the fstream library.
 In this assignment, you are required to use either std::map or std::set. You can use both if you want to. You are NOT allowed to use any data structures we have not learned so far, but feel free to use any data structures we have already learned, such as std::string, std::vector, std::list. In addition, **the web crawler component of your program must be recursive**.
 
 Use good coding style when you design and implement your program. Organize your program into functions:
-don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
+don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget
 to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
-You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
+You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
 
-**Due Date**: 03/21/2024, Thursday, 10pm.
+**Due Date**: 03/20/2025, Thursday, 10pm.
 
 ## Instructor's Code
 
@@ -423,18 +395,15 @@ A2: All 33 documents.
    - Putting almost everything in the main function. It's better to create separate functions for different tasks. (-2)
    - Function bodies containing more than one statement are placed in the .h file. (okay for templated classes) (-2)
    - Functions are not well documented or are poorly commented, in either the .h or the .cpp file. (-1)
-   - Improper uses or omissions of const and reference. (-1)
    - At least one function is excessively long (i.e., more than 200 lines). (-1)
    - Overly cramped, excessive whitespace, or poor indentation. (-1)
    - Poor file organization: Puts more than one class in a file (okay for very small helper classes) (-1)
    - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc. (-2)
-   - Contains useless comments like commented-out code, terminal commands, or silly notes. (-1)
  - DATA REPRESENTATION (7 pts)
    - Uses data structures which have not been covered in this class. (-7)
    - Uses filesystem library (i.e., #include &lt;filesystem&gt; ). (-7)
    - Neither std::map nor std::set is used. (-7)
    - Paths to all 32 HTML files are manually specified within the program's code. (The paths should be found by the program during runtime) (-5)
-   - Member variables are public. (-2)
  - RECURSION (3 pts)
    - Does not use recursion in the web crawler component. (-3)
 
