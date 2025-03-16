@@ -1,7 +1,7 @@
 HOMEWORK 6: INVERSE WORD SEARCH
 
 
-NAME:  < insert name >
+NAME:  Nicolas Morawski
 
 
 COLLABORATORS AND OTHER RESOURCES: 
@@ -10,12 +10,14 @@ List the names of everyone you talked to about this assignment
 LMS, etc.), and all of the resources (books, online reference
 material, etc.) you consulted in completing this assignment.
 
-< insert collaborators / resources >
+Lecture Slides
+cppreference.com
+cplusplus.com
 
 Remember: Your implementation for this assignment must be done on your
 own, as described in "Academic Integrity for Homework" handout.
 
-ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  < insert # hours >
+ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  15
 
 
 MISC. COMMENTS TO GRADER:  
@@ -33,4 +35,7 @@ What parts of the assignment did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this assignment? How well
 did the development and testing process go for you?
 
-< insert reflection >
+I generally did not have many issues in figuring out the correct recursive processes. 
+However, I found the biggest challenge to come with the optimization of my code. Some of the puzzles
+I managed to find the result for, but due to the extensive run time, Submitty would not grade
+the results.
