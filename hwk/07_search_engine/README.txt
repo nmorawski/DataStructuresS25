@@ -1,7 +1,7 @@
 HOMEWORK 7: Search Engine
 
 
-NAME:  < insert name >
+NAME:  Nicolas Morawski
 
 
 COLLABORATORS AND OTHER RESOURCES:
@@ -10,13 +10,15 @@ List the names of everyone you talked to about this assignment
 LMS, etc.), and all of the resources (books, online reference
 material, etc.) you consulted in completing this assignment.
 
-< insert collaborators / resources >
+Submitty Discussion Forums
+cppreference.com
+cplusplus.com
 
 Remember: Your implementation for this assignment must be done on your
 own, as described in "Academic Integrity for Homework" handout.
 
 
-ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  < insert # hours >
+ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  10-12
 
 
 MISC. COMMENTS TO GRADER:
@@ -33,5 +35,9 @@ What parts of the assignment did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this assignment? How well
 did the development and testing process go for you?
 
-< insert reflection >
+All in all, everything went quite smooth. Only issues I ran into were because of
+minor ambiguity in the instructions, which I got cleared up in the discussion forum.
+I also ran into some issues with my scores not being identical to the instructor's code,
+but this was because my html files were from an older version of what was on GitHub, so 
+my file lengths were off.
 
