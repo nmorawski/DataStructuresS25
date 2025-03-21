@@ -286,10 +286,10 @@ Of course you can change std::cout to a file stream so as to print the thumbs up
 
 In this assignment, you are required to maintain the comments in tree nodes, each comment should be stored in one tree node. **You must use recursion in your program in at least one of your functions.** There is no other requirement on what data structures you can use and what data structures you can not use.
 
-Use good coding style when you design and implement your program. Organize your program into functions: don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
-You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
+Use good coding style when you design and implement your program. Organize your program into functions: don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
+You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
 
-**Due Date**: 03/28/2024, Thursday, 10pm.
+**Due Date**: 03/27/2025, Thursday, 10pm.
 
 ## Instructor's Code
 
@@ -300,6 +300,10 @@ You can test (but not view) the instructor's code here: [instructor code](http:/
 Q1: Why sometimes the reply count does not match with the number of replies displayed?
 
 A1: On youtube, some inappropriate comments are not displayed but they still contribute to the reply count. And such comments are not included in our json files.
+
+Q2: Can I use the <nlohmann/json.hpp> to parse the json file?
+
+A2: It's not that we allow you or we don't allow you to use that json library, it's just that Submitty does not have this library.
 
 ## Rubric
 
@@ -319,7 +323,6 @@ A1: On youtube, some inappropriate comments are not displayed but they still con
    - Overly cramped, excessive whitespace, or poor indentation. (-1)
    - Poor file organization: Puts more than one class in a file (okay for very small helper classes) (-1)
    - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc. (-2)
-   - Contains useless comments like commented-out code, terminal commands, or silly notes. (-1)
  - DATA REPRESENTATION (6 pts)
    - Does not use tree data structures to store the comments. (-6)
  - RECURSION (2 pts)
