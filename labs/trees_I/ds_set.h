@@ -101,8 +101,8 @@ private:
 
     return new_root;
   }
-
-  void destroy_tree(TreeNode<T>* p) { }
+ 
+  void destroy_tree(TreeNode<T>* ) { }
 
   // iterator find(const T& key_value, TreeNode<T>* p) {
   //   if (!p) return iterator(NULL);
