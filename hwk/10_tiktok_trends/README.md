@@ -1,4 +1,4 @@
-# Homework 10 — TikTok Trends
+# Homework 9 — TikTok Trends
 
 In this assignment you will develop a program to display the trends page like TikTok does, let's call this program New York Trends. Please read the entire handout before starting to code the assignment.
 
@@ -36,9 +36,9 @@ Here:
 - *nytrends.exe* is the executable file name.
 - input.json contains data collected from TikTok. In this README we will refer to this file as **the json file**.
 - output.txt is where to print your output to. In this README we will refer to this file as **the output file**.
-- this field will be either hashtag or sound. When this field is *hashtag*, your program should display the top 10 trending hashtags to the output file. When this field is *sound*, your program should display the top 10 trending sounds to the output file.
+- this field will be either hashtag or sound. When this field is *hashtag*, your program should display the top 20 trending hashtags to the output file. When this field is *sound*, your program should display the top 20 trending sounds to the output file.
 
-To summarize what your program does: your program reads data from **the json file**, analyze the data and find out the top 10 trending hashtags, or the top 10 trending sounds, and display them in the output file.
+To summarize what your program does: your program reads data from **the json file**, analyze the data and find out the top 20 trending hashtags, or the top 20 trending sounds, and display them in the output file.
 
 ## Format of input.json
 
@@ -50,7 +50,7 @@ input.json represents the json file. It stores posts we collected from TikTok. E
 
 The line is enclosed with a pair of curly braces. And every line has these same fields:
 
-- *id*: TikTok assigns each post an id.
+- *id*: TikTok assigns each post an id, which is also known as the **video id**.
 - text: each post has its text content and its video/audio content. The text content is stored here. Keep in mind that on TikTok, a post can't just include text information, it must contain a video. Therefore, in the remainder of this section, when we say **the video** or **this video**, we mean the video which comes with this post. When users uses hash tags, these hash tags will appear in the text content, like in this above example, Taylor Swift used hash tags twice: *#tstheerastour* and *#swifttok*.
 - *createTime*: a timestamp indicating when this post was created. This is the timestamp in Unix epoch format. It represents the number of seconds that have passed since January 1, 1970 (the Unix epoch) until the specified date and time.
 - *createTimeISO*: still a timestamp indicating when this post was created. This is the same timestamp but presented in the ISO 8601 date and time format, which is more human friendly. Here, *"T"* is a separator indicating the beginning of the time portion; and *"Z"* indicates that the time is in Coordinated Universal Time (UTC).
@@ -191,9 +191,9 @@ your program should produce an output similar to what TikTok does (of course we 
 
 this basically is the trending hashtags, each is associated with some videos. In your output, these videos should be sorted in a descending order, based on how many views the video has received.
 
-More specifically, you should print the top 10 trending hashtags, and then for each hashtag, print 3 videos which use this hashtag in its post text. If a hashtag is used in 100 videos, select the 3 (out of these 100) most viewed videos. Print the most viewed video first, and then print the next most viewed video, and then the third most viewed video.
+More specifically, you should print the top 20 trending hashtags, and then for each hashtag, print 3 videos which use this hashtag in its post text. If a hashtag is used in 100 videos, select the 3 (out of these 100) most viewed videos. Print the most viewed video first, and then print the next most viewed video, and then the third most viewed video. In the case where two videos both use this hashtag have the same view count, pick the one which appears first in the input json file. However, if both needs to be printed, meaning that both are in the top 3, then check the video id (as an std::string object); if a.videoId > b.videoId, then display video a first.
 
-Definition of the top 10 trending hashtags: this should be the based on the usage of the hashtag - how many times in total each hashtag is used. When two hashtags are both used for the same amount of times, break the tie by the total view count of the videos associated with each hashtag. And if still a tie, break the tie by comparing the hashtag names, i.e., apply the less than operator (<) to the two names - both are std::strings, the hashtag whose name is less than the name of the other hashtag should be the winner and should be displayed first.
+Definition of the top 20 trending hashtags: this should be the based on the usage of the hashtag - how many times in total each hashtag is used. When two hashtags are both used for the same amount of times, break the tie by the total view count of the videos associated with each hashtag. And if still a tie, break the tie by comparing the hashtag names, i.e., apply the less than operator (<) to the two names - both are std::strings, the hashtag whose name is less than the name of the other hashtag should be the winner and should be displayed first.
 
 Example 1:
 
@@ -225,9 +225,9 @@ your program should produce an output similar to what TikTok does (of course we 
 
 this basically is the trending sounds, each is associated with some videos. In your output, these videos should be sorted in a descending order, based on how many views the video has received.
 
-More specifically, you should print the top 10 trending sounds, and then for each sound, print 3 videos which use this sound. If a sound is used in 100 videos, select the 3 (out of these 100) most viewed videos. Print the most viewed video first, and then print the next most viewed video, and then the third most viewed video.
+More specifically, you should print the top 20 trending sounds, and then for each sound, print 3 videos which use this sound. If a sound is used in 100 videos, select the 3 (out of these 100) most viewed videos. Print the most viewed video first, and then print the next most viewed video, and then the third most viewed video. In the case where two videos both use this sound have the same view count, pick the one which appears first in the input json file. However, if both needs to be printed, meaning that both are in the top 3, then check the video id (as an std::string object); if a.videoId > b.videoId, then display video a first.
 
-Definition of the top 10 trending sounds: this should be the based on the total view count of the videos which use this sound. If there is a tie, break the tie by comparing the music id, i.e., apply the less than operator (<) to the two music ids - both are std::strings, the sound whose music id is less than the music id of the other sound should be the winner, and should be displayed first.
+Definition of the top 20 trending sounds: this should be the based on the total view count of the videos which use this sound. If there is a tie, break the tie by comparing the music id, i.e., apply the less than operator (<) to the two music ids - both are std::strings, the sound whose music id is less than the music id of the other sound should be the winner, and should be displayed first.
 
 Example 1:
 
@@ -282,14 +282,14 @@ In order to use this above code block, you need to include the regular expressio
 
 ## Program Requirements & Submission Details
 
-In this assignment, you are required to use std::priority_queue. There is no other requirement on what data structures you can use and what data structures you can not use.
+In this assignment, you are required to use std::priority_queue. There is no other requirement on what data structures you can use and what data structures you can not use; and there is no other requirements on what libraries you can use or can not use.
 
 <!--**You must use try/throw/catch to handle exceptions in your code**. You do not need to do so everywhere in your code. You will only lose points if you do not use it at all.-->
 
-Use good coding style when you design and implement your program. Organize your program into functions: don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
-You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring24/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
+Use good coding style when you design and implement your program. Organize your program into functions: don’t put all the code in main! Be sure to read the [Homework Policies](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/homework_policies.php) as you put the finishing touches on your solution. Be sure to make up new test cases to fully debug your program and don’t forget to comment your code! Use the provided template [README.txt](./README.txt) file for notes you want the grader to read.
+You must do this assignment on your own, as described in the [Collaboration Policy & Academic Integrity](https://www.cs.rpi.edu/academics/courses/spring25/csci1200/academic_integrity.php) page. If you did discuss the problem or error messages, etc. with anyone, please list their names in your README.txt file.
 
-**Due Date**: 04/18/2024, Thursday, 10pm.
+**Due Date**: 04/10/2025, Thursday, 10pm.
 
 ## Instructor's Code
 
@@ -301,15 +301,32 @@ q1: For cases where a hashtag appears twice on a line does that count as two sep
 
 a1: Yes, a hashtag appears 2 times in one post will be counted as 2 times. This is the reason why some URLs appear twice in the output as the top 3 videos of some hashtag - as in that #foryou case in tiny1. (This is just to simplify your implementation).
 
+q2: What bonus do I get if my program ranks higher than the instructor's program on the leaderboard?
+
+a2: If by Thursday night 10pm (which is the submission deadline), your program ranks higher than the instructor's program, you have many options. You can choose one of these:
+- Drop the lowest test score - replace it with your highest test score.
+- Drop 2 of the lowest homeworks - replace them with your highest homework score.
+- Skip remaining homework and remaining labs (and receive full credits for them)
+
+   You will receive an email asking you about which option you want to choose, or if you want to propose a different option.
+
+q3: What if my program ranks higher than the instructor's program on leaderboard 6 and leaderboard 9?
+
+a3: You can skip the final exam; we will apply the highest test score among your test 1, 2, and 3, as your final exam score.
+
+q4: How many submissions can I make?
+
+a4: 60. Submitty will deduct points once you submit more than 60 times.
+
 ## Rubric
 
-13 pts
+17 pts
  - README.txt Completed (3 pts)
    - One of name, collaborators, or hours not filled in. (-1)
    - Two or more of name, collaborators, or hours not filled in. (-2)
    - No reflection. (-1)
- - IMPLEMENTATION AND CODING STYLE (5 pts)
-   - No credit (significantly incomplete implementation) (-5)
+ - IMPLEMENTATION AND CODING STYLE (8 pts)
+   - No credit (significantly incomplete implementation) (-8)
    - Putting almost everything in the main function. It's better to create separate functions for different tasks. (-2)
    - Function bodies containing more than one statement are placed in the .h file. (okay for templated classes) (-2)
    - Functions are not well documented or are poorly commented, in either the .h or the .cpp file. (-1)
@@ -317,11 +334,10 @@ a1: Yes, a hashtag appears 2 times in one post will be counted as 2 times. This 
    - At least one function is excessively long (i.e., more than 200 lines). (-1)
    - Overly cramped, excessive whitespace, or poor indentation. (-1)
    - Poor file organization: Puts more than one class in a file (okay for very small helper classes) (-1)
-   - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc.
-   - Contains useless comments like commented-out code, terminal commands, or silly notes. (-1)
- - DATA REPRESENTATION (5 pts)
-   - No credit (significantly incomplete implementation). (-5)
-   - Does not use std::priority_queue at all. (-5)
+   - Poor choice of variable names: non-descriptive names (e.g. 'vec', 'str', 'var'), single-letter variable names (except single loop counter), etc. (-1)
+ - DATA REPRESENTATION (6 pts)
+   - No credit (significantly incomplete implementation). (-6)
+   - Does not use std::priority_queue at all. (-6)
 <!--
    - Member variables are public. (-2)
  - Exceptions (2 pts)
