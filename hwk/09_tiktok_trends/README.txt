@@ -1,7 +1,7 @@
-HOMEWORK 10: Tiktok Trends
+HOMEWORK 9: Tiktok Trends
 
 
-NAME:  < insert name >
+NAME:  Nicolas Morawski
 
 
 COLLABORATORS AND OTHER RESOURCES:
@@ -10,13 +10,15 @@ List the names of everyone you talked to about this assignment
 LMS, etc.), and all of the resources (books, online reference
 material, etc.) you consulted in completing this assignment.
 
-< insert collaborators / resources >
+cppreference.com
+cplusplus.com
+Submitty forums
 
 Remember: Your implementation for this assignment must be done on your
 own, as described in "Academic Integrity for Homework" handout.
 
 
-ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  < insert # hours >
+ESTIMATE OF # OF HOURS SPENT ON THIS ASSIGNMENT:  6-8
 
 
 MISC. COMMENTS TO GRADER:
@@ -32,5 +34,7 @@ What parts of the assignment did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this assignment? How well
 did the development and testing process go for you?
 
-< insert reflection >
+I had next to no issues during the development of my program. The only issues/challenges I
+ran into were with trying to optimize my code further. There is definitely more I can do to speed up
+my code.
 
