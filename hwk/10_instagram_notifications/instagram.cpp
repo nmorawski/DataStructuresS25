@@ -31,6 +31,7 @@ bool extract_bool(const std::string &line, const std::string &key) {
 };
 //================================================================================================
 
+// Function to parse a user's notification preferences.
 void extract_preferences(const std::string& json, Preferences& prefs) { 
     // Parse each preference
     prefs.pauseAll = extract_bool(json, "pauseAll");
@@ -41,6 +42,7 @@ void extract_preferences(const std::string& json, Preferences& prefs) {
     prefs.messageRequests = extract_bool(json, "messageRequests");
 }
 
+// Go through users.json until the desired user is found, then parse thier notification preferences
 Preferences parse_users(const std::string& file, const std::string& user) {
     std::ifstream jsonFile(file);
     
@@ -63,7 +65,10 @@ Preferences parse_users(const std::string& file, const std::string& user) {
     exit(1);
 }
 
-void parse_posts(const std::string& file, const std::string& user, std::unordered_set<std::string> &posts) {
+// Go through posts.json, and if the the ownerUsername matches with the desired username, save the
+// post id in a hash set.
+void parse_posts(const std::string& file, const std::string& user,
+    std::unordered_set<std::string> &posts) {
     std::ifstream jsonFile(file);
    
     if (!jsonFile.is_open()) {
@@ -82,6 +87,9 @@ void parse_posts(const std::string& file, const std::string& user, std::unordere
     jsonFile.close();
 }
 
+// Function to go line by line in the events.txt, and if the event relates to the desired user,
+// create a notification, and save it. If there are several notifications objects of the same type,
+// there is logic to aggregate them into one object.
 void parse_events(const std::string& file, const std::string& user,
     std::vector<Notification*> &notifs, const std::unordered_set<std::string> &posts,
     const Preferences &prefs) {
@@ -111,11 +119,12 @@ void parse_events(const std::string& file, const std::string& user,
                             notifs[vec_size-2], 
                             current_count);
                             
-                        // Remove the individual notifications and delete them to prevent memory leaks
+                        // Remove the individual notifications to prevent memory leaks
                         for (int i = vec_size - current_count; i < vec_size; i++) {
                             delete notifs[i];
                         }
-                        std::vector<Notification*> temp_vec(notifs.begin(), notifs.end() - current_count);
+                        std::vector<Notification*> temp_vec(notifs.begin(),
+                            notifs.end() - current_count);
                         notifs.swap(temp_vec);
                         
                         // Add the aggregated notification
@@ -158,6 +167,7 @@ void parse_events(const std::string& file, const std::string& user,
     events.close();
 }
 
+// helper print function
 void print_notifs(const std::string& file, const std::vector<Notification*> &notifs) {
     std::ofstream output(file);
 
@@ -166,7 +176,8 @@ void print_notifs(const std::string& file, const std::vector<Notification*> &not
         exit(1);
     }
 
-    for (std::vector<Notification*>::const_reverse_iterator itr = notifs.crbegin(); itr != notifs.crend(); ++itr) { // Iterate backwards
+    for (std::vector<Notification*>::const_reverse_iterator itr = notifs.crbegin();
+        itr != notifs.crend(); ++itr) { // Iterate backwards
         if ((*itr)->getAggCheck())
             output << (*itr)->getAggMessage() << std::endl;
         else
@@ -175,14 +186,13 @@ void print_notifs(const std::string& file, const std::vector<Notification*> &not
     //output.close();
 }
 
+// Delete all Notification objects
 void cleanup(std::vector<Notification*> &notifs) {
-    // Delete all Notification objects
     for (Notification* notif : notifs)
         delete notif;
     notifs.clear();
 }
 
-// nynotifications.exe posts.json users.json events_medium.txt output.txt taylorswift
 int main(int argc, char* argv[]) {
     if (argc != 6) {
         std::cerr << "Invalid number of arguments." << std::endl;
@@ -202,8 +212,8 @@ int main(int argc, char* argv[]) {
     parse_posts(postsJson, user, posts);
 
     parse_events(events, user, notifs, posts, settings);
+    
     if (notifs.size() > 100) {
-        //temp, fix later
         for (int i = 0; i < notifs.size() - 100; i++)
             delete notifs[i];
 

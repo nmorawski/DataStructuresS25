@@ -3,6 +3,7 @@
 
 #include <string>
 
+// Used to save a given user's notification preferences
 class Preferences {
 public:
     bool pauseAll;
